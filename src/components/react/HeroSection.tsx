@@ -171,7 +171,7 @@ export default function HeroSection() {
       {/* PixelTrail mouse effect — lazy loaded, client only */}
       {mounted && (
         <Suspense fallback={null}>
-          <div style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "auto" }}>
+          <div style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "auto", opacity: 0.4 }}>
             <PixelTrail
               gridSize={63}
               trailSize={0.1}
