@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@import "@fontsource/sora/400.css";
+@import "@fontsource/sora/500.css";
+@import "@fontsource/sora/600.css";
+@import "@fontsource/sora/700.css";
+@import "@fontsource-variable/plus-jakarta-sans";
+@import "@fontsource-variable/jetbrains-mono";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Sora', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --color-accent-primary: #2D5741;
+  --color-accent-secondary: #D4A843;
+  --color-accent-hover: #3A7055;
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+
+  --color-bg-primary: var(--tw-bg-primary);
+  --color-bg-secondary: var(--tw-bg-secondary);
+  --color-bg-card: var(--tw-bg-card);
+  --color-text-primary: var(--tw-text-primary);
+  --color-text-secondary: var(--tw-text-secondary);
+  --color-border: var(--tw-border);
+}
+
+:root {
+  --tw-bg-primary: #0a0a0a;
+  --tw-bg-secondary: #111111;
+  --tw-bg-card: #1a1a1a;
+  --tw-text-primary: #F0E6D3;
+  --tw-text-secondary: #a3a3a3;
+  --tw-border: #262626;
+  color-scheme: dark;
+}
+
+:root.light {
+  --tw-bg-primary: #F5F0E8;
+  --tw-bg-secondary: #EDE0CE;
+  --tw-bg-card: #FFFFFF;
+  --tw-text-primary: #1a1a1a;
+  --tw-text-secondary: #6b7280;
+  --tw-border: #d4d4d4;
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: var(--color-accent-primary);
+  color: #F0E6D3;
+}

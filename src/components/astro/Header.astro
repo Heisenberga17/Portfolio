@@ -1,0 +1,89 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg-primary/80 backdrop-blur-md">
+  <nav class="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
+    <a href="/" class="font-heading text-xl font-bold text-accent-secondary hover:text-accent-primary transition-colors">
+      Heisen's
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              'text-sm font-medium transition-colors hover:text-accent-primary',
+              currentPath === link.href ? 'text-accent-primary' : 'text-text-secondary',
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Mobile hamburger button -->
+    <button
+      id="mobile-menu-btn"
+      class="md:hidden flex flex-col gap-1.5 p-2"
+      aria-label="Toggle menu"
+    >
+      <span class="block h-0.5 w-6 bg-text-primary transition-transform" id="burger-top"></span>
+      <span class="block h-0.5 w-6 bg-text-primary transition-opacity" id="burger-mid"></span>
+      <span class="block h-0.5 w-6 bg-text-primary transition-transform" id="burger-bot"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-bg-primary/95 backdrop-blur-md">
+    <ul class="flex flex-col items-center gap-4 py-6">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              'text-lg font-medium transition-colors hover:text-accent-primary',
+              currentPath === link.href ? 'text-accent-primary' : 'text-text-secondary',
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const top = document.getElementById('burger-top');
+  const mid = document.getElementById('burger-mid');
+  const bot = document.getElementById('burger-bot');
+
+  let isOpen = false;
+
+  btn?.addEventListener('click', () => {
+    isOpen = !isOpen;
+    menu?.classList.toggle('hidden', !isOpen);
+
+    if (isOpen) {
+      top!.style.transform = 'rotate(45deg) translate(4px, 4px)';
+      mid!.style.opacity = '0';
+      bot!.style.transform = 'rotate(-45deg) translate(4px, -4px)';
+    } else {
+      top!.style.transform = '';
+      mid!.style.opacity = '';
+      bot!.style.transform = '';
+    }
+  });
+</script>

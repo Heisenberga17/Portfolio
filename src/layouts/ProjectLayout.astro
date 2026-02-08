@@ -1,0 +1,57 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Section from '@components/astro/Section.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  liveUrl?: string;
+  date: Date;
+}
+
+const { title, description, image, tags, liveUrl, date } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} image={image} type="article">
+  <Section>
+    <a href="/projects" class="inline-flex items-center gap-2 text-accent-primary hover:text-accent-hover transition-colors mb-8 text-sm font-medium">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Projects
+    </a>
+
+    <div class="rounded-xl overflow-hidden mb-8 aspect-video bg-bg-card">
+      <img src={image} alt={title} class="w-full h-full object-cover" loading="eager" />
+    </div>
+
+    <h1 class="text-4xl md:text-5xl font-heading font-bold mb-4">{title}</h1>
+    <p class="text-text-secondary text-lg mb-6">{description}</p>
+
+    <div class="flex flex-wrap gap-2 mb-8">
+      {tags.map(tag => (
+        <span class="rounded-full bg-accent-primary/10 px-3 py-1 text-xs font-mono font-medium text-accent-primary">
+          {tag}
+        </span>
+      ))}
+    </div>
+
+    {liveUrl && (
+      <div class="mb-12">
+        <a
+          href={liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg bg-accent-primary px-6 py-3 text-sm font-medium text-white hover:bg-accent-hover transition-colors"
+        >
+          Visit Live Site
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+        </a>
+      </div>
+    )}
+
+    <article class="prose prose-invert prose-headings:font-heading prose-headings:text-text-primary prose-p:text-text-secondary prose-strong:text-text-primary prose-a:text-accent-primary max-w-none">
+      <slot />
+    </article>
+  </Section>
+</BaseLayout>

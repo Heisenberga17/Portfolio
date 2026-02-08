@@ -1,0 +1,152 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/astro/Section.astro';
+import SkillBar from '@components/react/SkillBar';
+import { skills, skillCategories } from '@data/skills';
+
+const grouped = Object.fromEntries(
+  skillCategories.map((cat) => [cat, skills.filter((s) => s.category === cat)])
+);
+
+const categoryLabels: Record<string, string> = {
+  frontend: 'Frontend',
+  backend: 'Backend',
+  tools: 'Tools',
+  platforms: 'Platforms',
+};
+---
+
+<BaseLayout
+  title="About | Heisen's Den"
+  description="Learn more about Heisen's — developer and entrepreneur based in Panama City, building digital products that matter."
+>
+  <!-- Bio Section -->
+  <Section>
+    <div class="grid gap-12 lg:grid-cols-5 items-start">
+      <!-- Photo placeholder — offset layout for visual tension -->
+      <div class="lg:col-span-2 flex justify-center lg:justify-start">
+        <div
+          class="relative w-full max-w-xs aspect-[3/4] rounded-2xl bg-bg-card border border-border flex items-center justify-center overflow-hidden"
+        >
+          <span class="text-text-secondary text-sm font-mono tracking-wider uppercase">Photo</span>
+          <!-- Decorative corner accents -->
+          <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-accent-primary rounded-tl-2xl"></div>
+          <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-accent-secondary rounded-br-2xl"></div>
+        </div>
+      </div>
+
+      <!-- Bio text -->
+      <div class="lg:col-span-3">
+        <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">About Me</p>
+        <h1 class="text-4xl md:text-5xl font-heading font-bold leading-tight mb-2">
+          Heisen's
+        </h1>
+        <p class="text-accent-secondary font-mono text-sm mb-8 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Panama City, Panama
+        </p>
+
+        <div class="space-y-4 text-text-secondary leading-relaxed">
+          <p>
+            I'm a self-taught developer and entrepreneur who thrives at the
+            intersection of code and business. I build things that work — not
+            just technically, but as products people actually use and pay for.
+          </p>
+          <p>
+            From managing football tournaments across Panama with Massport, to
+            running a cleaning service business with MicroClean, to founding an
+            independent music collective with Casa 24 Records — my projects
+            reflect who I am: someone who doesn't wait for permission to create.
+          </p>
+          <p>
+            I work primarily with React, Astro, TypeScript, and Cloudflare's
+            edge platform. I value speed, simplicity, and shipping things that
+            matter over chasing trends.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- What I Do -->
+  <Section background="secondary">
+    <div class="mb-14 max-w-2xl">
+      <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">Capabilities</p>
+      <h2 class="text-4xl md:text-5xl font-heading font-bold leading-tight">
+        What I <span class="text-accent-secondary">Do</span>
+      </h2>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      <!-- Entrepreneurial -->
+      <div class="group rounded-xl border border-border bg-bg-card p-8 transition-all hover:border-accent-primary/50 hover:shadow-[0_0_30px_rgba(45,87,65,0.08)]">
+        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
+        </div>
+        <h3 class="font-heading text-lg font-bold mb-2">Entrepreneurial</h3>
+        <p class="text-text-secondary text-sm leading-relaxed">
+          I identify opportunities and build products around them. From
+          validating ideas to acquiring customers — I handle the full
+          lifecycle of turning code into a business.
+        </p>
+      </div>
+
+      <!-- Technical -->
+      <div class="group rounded-xl border border-border bg-bg-card p-8 transition-all hover:border-accent-primary/50 hover:shadow-[0_0_30px_rgba(45,87,65,0.08)]">
+        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3 class="font-heading text-lg font-bold mb-2">Technical</h3>
+        <p class="text-text-secondary text-sm leading-relaxed">
+          Full-stack development with a frontend lean. I write clean,
+          performant code and deploy on the edge. Every line serves a
+          purpose — no bloat, no over-engineering.
+        </p>
+      </div>
+
+      <!-- Creative -->
+      <div class="group rounded-xl border border-border bg-bg-card p-8 transition-all hover:border-accent-primary/50 hover:shadow-[0_0_30px_rgba(45,87,65,0.08)]">
+        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 22v-2"/><path d="m17 20.66-1-1.73"/><path d="M11 10.27 7 3.34"/><path d="m20.66 17-1.73-1"/><path d="m3.34 7 1.73 1"/><path d="M14 12h8"/><path d="M2 12h2"/><path d="m20.66 7-1.73 1"/><path d="m3.34 17 1.73-1"/><path d="m17 3.34-1 1.73"/><path d="m11 13.73-4 6.93"/></svg>
+        </div>
+        <h3 class="font-heading text-lg font-bold mb-2">Creative</h3>
+        <p class="text-text-secondary text-sm leading-relaxed">
+          Music, branding, and visual storytelling. As the founder of Casa
+          24 Records, I blend artistic direction with digital platforms to
+          amplify independent voices.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Skills -->
+  <Section id="skills">
+    <div class="mb-14 max-w-2xl">
+      <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">Toolkit</p>
+      <h2 class="text-4xl md:text-5xl font-heading font-bold leading-tight">
+        Skills & <span class="text-accent-secondary">Technologies</span>
+      </h2>
+    </div>
+
+    <div class="grid gap-12 md:grid-cols-2">
+      {skillCategories.map((cat) => (
+        <div>
+          <h3 class="font-heading text-lg font-semibold mb-6 flex items-center gap-3">
+            <span class="h-px flex-1 bg-border"></span>
+            <span class="text-accent-secondary">{categoryLabels[cat]}</span>
+            <span class="h-px flex-1 bg-border"></span>
+          </h3>
+          <div class="space-y-4">
+            {grouped[cat].map((skill) => (
+              <SkillBar
+                client:visible
+                name={skill.name}
+                level={skill.level}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>

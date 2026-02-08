@@ -1,0 +1,34 @@
+---
+import { socials } from '@data/socials';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border bg-bg-secondary py-12">
+  <div class="mx-auto max-w-[1200px] px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="text-center md:text-left">
+        <p class="font-heading font-bold text-accent-secondary">Heisen's Den</p>
+        <p class="text-text-secondary text-sm mt-1">
+          &copy; {year} Heisen's. All rights reserved.
+        </p>
+      </div>
+      <div class="flex items-center gap-4">
+        {socials.map(social => (
+          <a
+            href={social.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-text-secondary hover:text-accent-primary transition-colors p-2"
+            aria-label={social.label}
+          >
+            <Fragment set:html={social.icon} />
+          </a>
+        ))}
+      </div>
+      <p class="text-text-secondary text-xs">
+        Built with Astro & React
+      </p>
+    </div>
+  </div>
+</footer>

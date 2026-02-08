@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/astro/Section.astro';
+import ProjectFilter from '@components/react/ProjectFilter';
+import { projects } from '@data/projects';
+
+const serializedProjects = projects.map((p) => ({
+  slug: p.slug,
+  title: p.title,
+  description: p.description,
+  image: p.image,
+  tags: p.tech,
+  category: p.category,
+  color: p.color,
+  url: p.url,
+}));
+---
+
+<BaseLayout
+  title="Projects | Heisen's Den"
+  description="Explore my portfolio of web platforms, business tools, and creative projects built with modern technologies."
+>
+  <Section>
+    <div class="mb-14 max-w-2xl">
+      <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">Portfolio</p>
+      <h2 class="text-4xl md:text-5xl font-heading font-bold leading-tight">
+        My <span class="text-accent-secondary">Projects</span>
+      </h2>
+      <p class="text-text-secondary mt-4 text-lg leading-relaxed">
+        Each project represents a real problem solved with code, design, and a lot of caffeine.
+      </p>
+    </div>
+
+    <ProjectFilter projects={serializedProjects} client:load />
+  </Section>
+</BaseLayout>

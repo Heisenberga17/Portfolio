@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://heisensden.pages.dev/sitemap-index.xml
