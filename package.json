@@ -15,6 +15,7 @@
     "@astrojs/sitemap": "^3.7.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource-variable/plus-jakarta-sans": "^5.2.8",
+    "@fontsource/cinzel-decorative": "^5.2.8",
     "@fontsource/sora": "^5.2.8",
     "@gsap/react": "^2.1.2",
     "@react-three/drei": "^10.7.7",

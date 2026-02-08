@@ -4,12 +4,15 @@
 @import "@fontsource/sora/500.css";
 @import "@fontsource/sora/600.css";
 @import "@fontsource/sora/700.css";
+@import "@fontsource/cinzel-decorative/400.css";
+@import "@fontsource/cinzel-decorative/700.css";
 @import "@fontsource-variable/plus-jakarta-sans";
 @import "@fontsource-variable/jetbrains-mono";
 
 @theme {
   --font-sans: 'Plus Jakarta Sans Variable', system-ui, -apple-system, sans-serif;
   --font-heading: 'Sora', system-ui, sans-serif;
+  --font-display: 'Cinzel Decorative', 'Sora', serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
 
   --color-accent-primary: #2D5741;
@@ -53,7 +56,11 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2 {
+  font-family: var(--font-display);
+}
+
+h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
 

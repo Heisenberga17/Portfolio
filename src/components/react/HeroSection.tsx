@@ -225,7 +225,7 @@ export default function HeroSection() {
             to={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
             threshold={0.1}
             rootMargin="0px"
-            className="text-[clamp(3.5rem,10vw,7.5rem)] font-bold leading-[0.95] tracking-[-0.03em] text-text-primary"
+            className="text-[clamp(3.5rem,10vw,7.5rem)] font-bold leading-[0.95] tracking-[-0.03em] text-text-primary font-display"
           />
         </div>
 
@@ -234,7 +234,7 @@ export default function HeroSection() {
           <GradientText
             colors={["#2D5741", "#3A7055", "#D4A843", "#2D5741"]}
             animationSpeed={6}
-            className="text-[clamp(3rem,8vw,6rem)] font-heading font-bold leading-none"
+            className="text-[clamp(3rem,8vw,6rem)] font-display font-bold leading-none"
           >
             Den
           </GradientText>
