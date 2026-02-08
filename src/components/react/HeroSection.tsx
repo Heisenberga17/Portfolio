@@ -1,13 +1,18 @@
+import { lazy, Suspense, useEffect, useState } from "react";
 import SplitText from "@/components/SplitText";
 import GradientText from "@/components/GradientText";
 import BlurText from "@/components/BlurText";
 import Squares from "@/components/Squares";
 import Magnet from "@/components/Magnet";
 
+const PixelTrail = lazy(() => import("@/components/PixelTrail"));
+
 const TAGLINE =
   "Building digital products across music, sports, and services";
 
 export default function HeroSection() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   return (
     <section
       style={{
@@ -162,6 +167,22 @@ export default function HeroSection() {
           hoverFillColor="rgba(45,87,65,0.04)"
         />
       </div>
+
+      {/* PixelTrail mouse effect — lazy loaded, client only */}
+      {mounted && (
+        <Suspense fallback={null}>
+          <div style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "auto" }}>
+            <PixelTrail
+              gridSize={63}
+              trailSize={0.1}
+              maxAge={300}
+              interpolate={5}
+              color="#2D5741"
+              gooeyFilter={{ id: "hero-goo", strength: 6 }}
+            />
+          </div>
+        </Suspense>
+      )}
 
       <div className="hero-grid-fade" />
       <div className="hero-glow-green" />
