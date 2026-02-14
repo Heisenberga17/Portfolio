@@ -85,7 +85,7 @@ export default function HeroSection() {
               trailSize={0.3}
               maxAge={500}
               interpolate={8}
-              color="#2D5741"
+              color="#D4A843"
               gooeyFilter={{ id: "hero-goo", strength: 10 }}
             />
           </div>
