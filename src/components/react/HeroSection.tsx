@@ -1,6 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import SplitText from "@/components/SplitText";
-import GradientText from "@/components/GradientText";
+import ASCIIText from "@/components/ASCIIText";
 import BlurText from "@/components/BlurText";
 import Squares from "@/components/Squares";
 
@@ -62,7 +61,6 @@ export default function HeroSection() {
           animation-fill-mode: forwards;
         }
         .hero-scroll-indicator svg { stroke: var(--color-text-secondary); }
-        .hero-heading .split-parent { overflow: visible !important; }
       `}</style>
 
       {/* Squares animated grid background */}
@@ -97,37 +95,21 @@ export default function HeroSection() {
       <div className="hero-glow-gold" />
 
       {/* Main content */}
-      <div className="relative z-[2] text-center max-w-[800px] px-6">
-        {/* Heading: SplitText character stagger */}
-        <div className="hero-heading">
-          <SplitText
-            text="Heisen's"
-            tag="h1"
-            splitType="chars"
-            delay={70}
-            duration={0.8}
-            ease="power3.out"
-            from={{ opacity: 0, y: 40, rotateX: 40, filter: "blur(8px)" }}
-            to={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-            threshold={0.1}
-            rootMargin="0px"
-            className="text-[clamp(3.5rem,10vw,7.5rem)] font-bold leading-[0.95] tracking-[-0.03em] text-text-primary font-display"
+      <div className="relative z-[2] text-center w-full max-w-[900px] px-6">
+        {/* ASCIIText heading */}
+        <div className="relative w-full h-[300px] md:h-[350px]">
+          <ASCIIText
+            text="Heisen's Den"
+            asciiFontSize={8}
+            textFontSize={200}
+            textColor="#fdf9f3"
+            planeBaseHeight={8}
+            enableWaves={false}
           />
         </div>
 
-        {/* Subheading: "Den" with animated gradient */}
-        <div className="mt-1">
-          <GradientText
-            colors={["#2D5741", "#3A7055", "#D4A843", "#2D5741"]}
-            animationSpeed={6}
-            className="text-[clamp(3rem,8vw,6rem)] font-display font-bold leading-none"
-          >
-            Den
-          </GradientText>
-        </div>
-
         {/* Tagline: BlurText reveal */}
-        <div className="mt-7 max-w-[540px] mx-auto">
+        <div className="mt-4 max-w-[540px] mx-auto">
           <BlurText
             text={TAGLINE}
             delay={80}
