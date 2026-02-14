@@ -7,8 +7,7 @@ import Magnet from "@/components/Magnet";
 
 const PixelTrail = lazy(() => import("@/components/PixelTrail"));
 
-const TAGLINE =
-  "Building digital products across music, sports, and services";
+const TAGLINE = "Developer crafting web platforms and digital experiences";
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);

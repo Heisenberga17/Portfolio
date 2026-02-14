@@ -1,7 +1,7 @@
 const STATUS_ITEMS = [
-  { key: "Building", value: "Massport v2" },
-  { key: "Running", value: "MicroClean" },
-  { key: "Recording", value: "Casa 24 sessions" },
+  { key: "Built", value: "Massport" },
+  { key: "Shipped", value: "MicroClean" },
+  { key: "Launched", value: "Casa 24 Records" },
   { key: "Based in", value: "Panama City" },
 ];
 
@@ -11,8 +11,8 @@ export default function StatusWidget() {
       <p className="font-mono text-xs text-text-secondary tracking-widest uppercase">
         Currently
       </p>
-      {STATUS_ITEMS.map((item) => (
-        <div key={item.key}>
+      {STATUS_ITEMS.map((item, i) => (
+        <div key={i}>
           <span className="font-mono text-xs text-accent-secondary">
             {item.key}
           </span>
