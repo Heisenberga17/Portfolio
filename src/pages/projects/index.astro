@@ -18,18 +18,10 @@ const serializedProjects = projects.map((p) => ({
 
 <BaseLayout
   title="Projects | Heisen's Den"
-  description="Explore my portfolio of web platforms, business tools, and creative projects built with modern technologies."
+  description="Things I've built — platforms, businesses, and creative projects."
 >
   <Section>
-    <div class="mb-14 max-w-2xl">
-      <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">Portfolio</p>
-      <h2 class="text-4xl md:text-5xl font-display font-bold leading-tight">
-        My <span class="text-accent-secondary">Projects</span>
-      </h2>
-      <p class="text-text-secondary mt-4 text-lg leading-relaxed">
-        Each project represents a real problem solved with code, design, and a lot of caffeine.
-      </p>
-    </div>
+    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-14">Projects</h1>
 
     <ProjectFilter projects={serializedProjects} client:load />
   </Section>

@@ -5,7 +5,7 @@ import Section from '@components/astro/Section.astro';
 import HeroSection from '@components/react/HeroSection';
 import TechStrip from '@components/react/TechStrip';
 import ProjectCard from '@components/react/ProjectCard';
-import StatsWidget from '@components/react/StatsWidget';
+import StatusWidget from '@components/react/StatusWidget';
 import { techStripItems } from '@data/skills';
 
 const allProjects = await getCollection('projects');
@@ -29,14 +29,15 @@ const featuredProjects = allProjects
 
   <!-- Featured Projects -->
   <Section id="projects">
-    <div class="mb-14 max-w-2xl">
-      <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">Selected Work</p>
-      <h2 class="text-4xl md:text-5xl font-display font-bold leading-tight">
-        Featured <span class="text-accent-secondary">Projects</span>
-      </h2>
-      <p class="text-text-secondary mt-4 text-lg leading-relaxed">
-        A curated selection of projects where design meets engineering.
-      </p>
+    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 mb-14">
+      <h2 class="text-3xl md:text-4xl font-bold leading-tight">Projects</h2>
+      <a
+        href="/projects"
+        class="group inline-flex items-center gap-2 text-accent-primary font-medium text-sm transition-colors hover:text-accent-hover"
+      >
+        See all
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
     </div>
 
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -52,16 +53,6 @@ const featuredProjects = allProjects
         />
       ))}
     </div>
-
-    <div class="mt-12 text-center">
-      <a
-        href="/projects"
-        class="group inline-flex items-center gap-2 rounded-lg border border-border bg-bg-card px-6 py-3 text-sm font-medium text-text-primary transition-all hover:border-accent-primary hover:shadow-[0_0_24px_rgba(45,87,65,0.15)]"
-      >
-        View All Projects
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-    </div>
   </Section>
 
   <!-- About Preview -->
@@ -69,32 +60,29 @@ const featuredProjects = allProjects
     <div class="grid gap-12 lg:grid-cols-5 items-center">
       <!-- Text column — wider -->
       <div class="lg:col-span-3">
-        <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">Who I Am</p>
-        <h2 class="text-4xl md:text-5xl font-display font-bold leading-tight mb-6">
-          Building <span class="text-accent-secondary">Digital</span> Products
-        </h2>
         <p class="text-text-secondary text-lg leading-relaxed mb-4">
-          I'm a developer and entrepreneur based in Panama City. I craft
-          performant web experiences and build products that solve real
-          problems — from sports platforms to service businesses.
+          I'm a developer and entrepreneur out of Panama City. I run
+          <strong class="text-text-primary">Massport</strong> (football tournament platform),
+          <strong class="text-text-primary">MicroClean</strong> (cleaning service), and
+          <strong class="text-text-primary">Casa 24 Records</strong> (indie music collective).
         </p>
         <p class="text-text-secondary leading-relaxed mb-8">
-          My work sits at the intersection of clean code, thoughtful design,
-          and practical business sense. Every project is an opportunity to
-          push what's possible on the modern web.
+          Most of my time goes into writing code that actually ships and keeping
+          these businesses moving. I like building things that people use — not
+          just things that look good in a portfolio.
         </p>
         <a
           href="/about"
           class="group inline-flex items-center gap-2 text-accent-primary font-medium transition-colors hover:text-accent-hover"
         >
-          Read More About Me
+          More about me
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
       </div>
 
-      <!-- Stats column -->
+      <!-- Status column -->
       <div class="lg:col-span-2">
-        <StatsWidget client:visible />
+        <StatusWidget client:visible />
       </div>
     </div>
   </Section>

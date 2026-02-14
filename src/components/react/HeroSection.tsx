@@ -14,40 +14,21 @@ export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   return (
-    <section
-      style={{
-        position: "relative",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-        background: "var(--color-bg-primary)",
-      }}
-    >
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-primary">
       <style>{`
-        /* Radial fade overlay so grid fades at edges */
         .hero-grid-fade {
           position: absolute;
           inset: 0;
-          background: radial-gradient(
-            ellipse 70% 60% at 50% 45%,
-            transparent 0%,
-            var(--color-bg-primary) 100%
-          );
+          background: radial-gradient(ellipse 70% 60% at 50% 45%, transparent 0%, var(--color-bg-primary) 100%);
           pointer-events: none;
           z-index: 1;
         }
-
-        /* Ambient glow spots */
         .hero-glow-green {
           position: absolute;
-          width: 420px;
-          height: 420px;
+          width: 420px; height: 420px;
           border-radius: 50%;
           background: radial-gradient(circle, rgba(45,87,65,0.18) 0%, transparent 70%);
-          top: 15%;
-          left: 10%;
+          top: 15%; left: 10%;
           filter: blur(80px);
           pointer-events: none;
           z-index: 0;
@@ -55,12 +36,10 @@ export default function HeroSection() {
         }
         .hero-glow-gold {
           position: absolute;
-          width: 320px;
-          height: 320px;
+          width: 320px; height: 320px;
           border-radius: 50%;
           background: radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%);
-          bottom: 20%;
-          right: 12%;
+          bottom: 20%; right: 12%;
           filter: blur(80px);
           pointer-events: none;
           z-index: 0;
@@ -70,76 +49,13 @@ export default function HeroSection() {
           from { transform: translate(0, 0) scale(1); }
           to { transform: translate(30px, -20px) scale(1.15); }
         }
-
-        /* ---- CTA solid button ---- */
-        .hero-btn-solid {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 14px 32px;
-          background: #2D5741;
-          color: #F0E6D3;
-          font-family: var(--font-heading);
-          font-weight: 600;
-          font-size: 0.95rem;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
-          text-decoration: none;
-          transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.2s ease;
-          box-shadow: 0 0 0 0 rgba(45,87,65,0), 0 2px 8px rgba(0,0,0,0.3);
-        }
-        .hero-btn-solid:hover {
-          transform: translateY(-2px);
-          background: #3A7055;
-          box-shadow: 0 0 24px rgba(45,87,65,0.35), 0 8px 24px rgba(0,0,0,0.3);
-        }
-
-        /* ---- CTA outline button ---- */
-        .hero-btn-outline {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 14px 32px;
-          background: transparent;
-          color: #D4A843;
-          font-family: var(--font-heading);
-          font-weight: 600;
-          font-size: 0.95rem;
-          border: 1.5px solid #D4A843;
-          border-radius: 10px;
-          cursor: pointer;
-          text-decoration: none;
-          transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.2s ease, color 0.2s ease;
-        }
-        .hero-btn-outline:hover {
-          transform: translateY(-2px);
-          background: rgba(212,168,67,0.08);
-          box-shadow: 0 0 24px rgba(212,168,67,0.2), 0 8px 24px rgba(0,0,0,0.2);
-        }
-
-        /* ---- Decorative corner glyphs ---- */
-        .hero-corner-glyph {
-          position: absolute;
-          font-family: var(--font-mono);
-          font-size: 0.7rem;
-          color: var(--color-accent-primary);
-          opacity: 0.2;
-          pointer-events: none;
-          user-select: none;
-          z-index: 2;
-          letter-spacing: 2px;
-        }
-
-        /* ---- Scroll indicator ---- */
         @keyframes hero-scroll-bob {
           0%, 100% { transform: translateY(0); opacity: 0.5; }
           50% { transform: translateY(8px); opacity: 1; }
         }
         .hero-scroll-indicator {
           position: absolute;
-          bottom: 32px;
-          left: 50%;
+          bottom: 32px; left: 50%;
           transform: translateX(-50%);
           z-index: 3;
           animation: hero-scroll-bob 2s ease-in-out infinite;
@@ -147,18 +63,12 @@ export default function HeroSection() {
           animation-delay: 2.5s;
           animation-fill-mode: forwards;
         }
-        .hero-scroll-indicator svg {
-          stroke: var(--color-text-secondary);
-        }
-
-        /* Override SplitText wrapper for hero */
-        .hero-heading .split-parent {
-          overflow: visible !important;
-        }
+        .hero-scroll-indicator svg { stroke: var(--color-text-secondary); }
+        .hero-heading .split-parent { overflow: visible !important; }
       `}</style>
 
       {/* Squares animated grid background */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+      <div className="absolute inset-0 z-0">
         <Squares
           direction="diagonal"
           speed={0.3}
@@ -171,7 +81,7 @@ export default function HeroSection() {
       {/* PixelTrail mouse effect — lazy loaded, client only */}
       {mounted && (
         <Suspense fallback={null}>
-          <div style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "auto", opacity: 0.4 }}>
+          <div className="absolute inset-0 z-[1] pointer-events-auto opacity-40">
             <PixelTrail
               gridSize={63}
               trailSize={0.1}
@@ -188,30 +98,8 @@ export default function HeroSection() {
       <div className="hero-glow-green" />
       <div className="hero-glow-gold" />
 
-      {/* Corner decorations */}
-      <span className="hero-corner-glyph" style={{ top: 24, left: 24 }}>
-        {"// heisen.init()"}
-      </span>
-      <span className="hero-corner-glyph" style={{ top: 24, right: 24, textAlign: "right" }}>
-        {"v0.1.0"}
-      </span>
-      <span className="hero-corner-glyph" style={{ bottom: 24, left: 24 }}>
-        {"<den>"}
-      </span>
-      <span className="hero-corner-glyph" style={{ bottom: 24, right: 24, textAlign: "right" }}>
-        {"SNES://ready"}
-      </span>
-
       {/* Main content */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 2,
-          textAlign: "center",
-          maxWidth: 800,
-          padding: "0 24px",
-        }}
-      >
+      <div className="relative z-[2] text-center max-w-[800px] px-6">
         {/* Heading: SplitText character stagger */}
         <div className="hero-heading">
           <SplitText
@@ -230,7 +118,7 @@ export default function HeroSection() {
         </div>
 
         {/* Subheading: "Den" with animated gradient */}
-        <div style={{ marginTop: 4 }}>
+        <div className="mt-1">
           <GradientText
             colors={["#2D5741", "#3A7055", "#D4A843", "#2D5741"]}
             animationSpeed={6}
@@ -241,7 +129,7 @@ export default function HeroSection() {
         </div>
 
         {/* Tagline: BlurText reveal */}
-        <div style={{ marginTop: 28, maxWidth: 540, marginLeft: "auto", marginRight: "auto" }}>
+        <div className="mt-7 max-w-[540px] mx-auto">
           <BlurText
             text={TAGLINE}
             delay={80}
@@ -252,27 +140,13 @@ export default function HeroSection() {
         </div>
 
         {/* CTAs with Magnet hover effect */}
-        <div
-          style={{
-            marginTop: 40,
-            display: "flex",
-            gap: 16,
-            justifyContent: "center",
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="mt-10 flex gap-4 justify-center flex-wrap">
           <Magnet padding={60} magnetStrength={3}>
-            <a href="/projects" className="hero-btn-solid">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+            <a
+              href="/projects"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-accent-primary text-[#F0E6D3] font-heading font-semibold text-[0.95rem] rounded-[10px] no-underline cursor-pointer shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(45,87,65,0.35),0_8px_24px_rgba(0,0,0,0.3)]"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="7" height="7" />
                 <rect x="14" y="3" width="7" height="7" />
                 <rect x="14" y="14" width="7" height="7" />
@@ -282,18 +156,12 @@ export default function HeroSection() {
             </a>
           </Magnet>
           <Magnet padding={60} magnetStrength={3}>
-            <a href="/contact" className="hero-btn-outline">
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-transparent text-accent-secondary font-heading font-semibold text-[0.95rem] border-[1.5px] border-accent-secondary rounded-[10px] no-underline cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-secondary/8 hover:shadow-[0_0_24px_rgba(212,168,67,0.2),0_8px_24px_rgba(0,0,0,0.2)]"
+            >
               Get In Touch
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
               </svg>
@@ -304,15 +172,7 @@ export default function HeroSection() {
 
       {/* Scroll indicator */}
       <div className="hero-scroll-indicator">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </div>

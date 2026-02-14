@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/astro/Section.astro';
-import SkillBar from '@components/react/SkillBar';
 import { skills, skillCategories } from '@data/skills';
 
 const grouped = Object.fromEntries(
@@ -18,12 +17,12 @@ const categoryLabels: Record<string, string> = {
 
 <BaseLayout
   title="About | Heisen's Den"
-  description="Learn more about Heisen's — developer and entrepreneur based in Panama City, building digital products that matter."
+  description="Learn more about Heisen's — developer and entrepreneur based in Panama City."
 >
   <!-- Bio Section -->
   <Section>
     <div class="grid gap-12 lg:grid-cols-5 items-start">
-      <!-- Photo placeholder — offset layout for visual tension -->
+      <!-- Photo -->
       <div class="lg:col-span-2 flex justify-center lg:justify-start">
         <div
           class="relative w-full max-w-xs aspect-[3/4] rounded-2xl bg-bg-card border border-border overflow-hidden"
@@ -34,7 +33,6 @@ const categoryLabels: Record<string, string> = {
             class="w-full h-full object-cover"
             loading="eager"
           />
-          <!-- Decorative corner accents -->
           <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-accent-primary rounded-tl-2xl"></div>
           <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-accent-secondary rounded-br-2xl"></div>
         </div>
@@ -42,7 +40,6 @@ const categoryLabels: Record<string, string> = {
 
       <!-- Bio text -->
       <div class="lg:col-span-3">
-        <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">About Me</p>
         <h1 class="text-4xl md:text-5xl font-display font-bold leading-tight mb-2">
           Heisen's
         </h1>
@@ -53,20 +50,21 @@ const categoryLabels: Record<string, string> = {
 
         <div class="space-y-4 text-text-secondary leading-relaxed">
           <p>
-            I'm a self-taught developer and entrepreneur who thrives at the
-            intersection of code and business. I build things that work — not
-            just technically, but as products people actually use and pay for.
+            Self-taught developer, entrepreneur, and the kind of person who'd
+            rather ship something imperfect than plan something forever. I build
+            things that work — not just technically, but as products people
+            actually use and pay for.
           </p>
           <p>
-            From managing football tournaments across Panama with Massport, to
-            running a cleaning service business with MicroClean, to founding an
-            independent music collective with Casa 24 Records — my projects
-            reflect who I am: someone who doesn't wait for permission to create.
+            Right now I'm running three projects: <strong class="text-text-primary">Massport</strong>,
+            a platform for managing football tournaments across Panama;
+            <strong class="text-text-primary">MicroClean</strong>, a cleaning service business;
+            and <strong class="text-text-primary">Casa 24 Records</strong>, an independent music
+            collective I founded.
           </p>
           <p>
-            I work primarily with React, Astro, TypeScript, and Cloudflare's
-            edge platform. I value speed, simplicity, and shipping things that
-            matter over chasing trends.
+            My stack is React, Astro, TypeScript, and Cloudflare's edge platform.
+            I like things fast, simple, and deployed.
           </p>
         </div>
       </div>
@@ -75,79 +73,62 @@ const categoryLabels: Record<string, string> = {
 
   <!-- What I Do -->
   <Section background="secondary">
-    <div class="mb-14 max-w-2xl">
-      <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">Capabilities</p>
-      <h2 class="text-4xl md:text-5xl font-display font-bold leading-tight">
-        What I <span class="text-accent-secondary">Do</span>
-      </h2>
-    </div>
+    <h2 class="text-2xl md:text-3xl font-bold leading-tight mb-10">What I do</h2>
 
-    <div class="grid gap-6 md:grid-cols-3">
-      <!-- Entrepreneurial -->
-      <div class="group rounded-xl border border-border bg-bg-card p-8 transition-all hover:border-accent-primary/50 hover:shadow-[0_0_30px_rgba(45,87,65,0.08)]">
-        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
+    <div class="space-y-10 max-w-2xl">
+      <div class="flex gap-6">
+        <span class="text-accent-secondary font-mono text-sm mt-1 shrink-0">01</span>
+        <div>
+          <h3 class="font-heading text-lg font-semibold mb-2">I build businesses, not just apps</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Massport started as a side project and turned into the go-to tournament
+            management tool in Panama. MicroClean runs on a system I built from scratch.
+            The code is a means to an end — the end is a working business.
+          </p>
         </div>
-        <h3 class="font-heading text-lg font-bold mb-2">Entrepreneurial</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          I identify opportunities and build products around them. From
-          validating ideas to acquiring customers — I handle the full
-          lifecycle of turning code into a business.
-        </p>
       </div>
 
-      <!-- Technical -->
-      <div class="group rounded-xl border border-border bg-bg-card p-8 transition-all hover:border-accent-primary/50 hover:shadow-[0_0_30px_rgba(45,87,65,0.08)]">
-        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      <div class="flex gap-6">
+        <span class="text-accent-secondary font-mono text-sm mt-1 shrink-0">02</span>
+        <div>
+          <h3 class="font-heading text-lg font-semibold mb-2">I write code that ships</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Full-stack with a frontend lean. I deploy on the edge, keep bundles
+            small, and don't add complexity unless it solves a real problem. If it
+            works and it's fast, it's good enough.
+          </p>
         </div>
-        <h3 class="font-heading text-lg font-bold mb-2">Technical</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Full-stack development with a frontend lean. I write clean,
-          performant code and deploy on the edge. Every line serves a
-          purpose — no bloat, no over-engineering.
-        </p>
       </div>
 
-      <!-- Creative -->
-      <div class="group rounded-xl border border-border bg-bg-card p-8 transition-all hover:border-accent-primary/50 hover:shadow-[0_0_30px_rgba(45,87,65,0.08)]">
-        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 22v-2"/><path d="m17 20.66-1-1.73"/><path d="M11 10.27 7 3.34"/><path d="m20.66 17-1.73-1"/><path d="m3.34 7 1.73 1"/><path d="M14 12h8"/><path d="M2 12h2"/><path d="m20.66 7-1.73 1"/><path d="m3.34 17 1.73-1"/><path d="m17 3.34-1 1.73"/><path d="m11 13.73-4 6.93"/></svg>
+      <div class="flex gap-6">
+        <span class="text-accent-secondary font-mono text-sm mt-1 shrink-0">03</span>
+        <div>
+          <h3 class="font-heading text-lg font-semibold mb-2">I make music on the side</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Casa 24 Records is the creative outlet. I handle the artistic direction,
+            digital distribution, and the platform side — blending independent music
+            with the tools to get it heard.
+          </p>
         </div>
-        <h3 class="font-heading text-lg font-bold mb-2">Creative</h3>
-        <p class="text-text-secondary text-sm leading-relaxed">
-          Music, branding, and visual storytelling. As the founder of Casa
-          24 Records, I blend artistic direction with digital platforms to
-          amplify independent voices.
-        </p>
       </div>
     </div>
   </Section>
 
   <!-- Skills -->
   <Section id="skills">
-    <div class="mb-14 max-w-2xl">
-      <p class="text-accent-primary font-mono text-sm tracking-widest uppercase mb-3">Toolkit</p>
-      <h2 class="text-4xl md:text-5xl font-display font-bold leading-tight">
-        Skills & <span class="text-accent-secondary">Technologies</span>
-      </h2>
-    </div>
+    <h2 class="text-2xl md:text-3xl font-bold leading-tight mb-10">Tools I use</h2>
 
-    <div class="grid gap-12 md:grid-cols-2">
+    <div class="grid gap-10 md:grid-cols-2">
       {skillCategories.map((cat) => (
         <div>
-          <h3 class="font-heading text-lg font-semibold mb-6 flex items-center gap-3">
-            <span class="h-px flex-1 bg-border"></span>
-            <span class="text-accent-secondary">{categoryLabels[cat]}</span>
-            <span class="h-px flex-1 bg-border"></span>
+          <h3 class="font-heading text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">
+            {categoryLabels[cat]}
           </h3>
-          <div class="space-y-4">
+          <div class="flex flex-wrap gap-2">
             {grouped[cat].map((skill) => (
-              <SkillBar
-                client:visible
-                name={skill.name}
-                level={skill.level}
-              />
+              <span class="px-3 py-1.5 rounded-lg bg-bg-card border border-border text-sm text-text-primary font-medium">
+                {skill.name}
+              </span>
             ))}
           </div>
         </div>
