@@ -14,6 +14,19 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "casa24records",
+    title: "Casa 24 Records",
+    url: "https://casa24records.info",
+    description: "Independent hip-hop collective from Panama. Seven artists creating genre-fluid music spanning rap, R&B, indie, and Latin styles.",
+    longDescription: "Casa 24 Records is the digital home of an independent hip-hop collective from Panama City. The platform showcases seven artists who create genre-fluid music spanning rap, R&B, indie, and Latin styles. It integrates with Spotify and YouTube APIs to display the latest releases, streaming stats, and music videos, serving as both a promotional tool and fan hub.",
+    role: "Founder & Developer",
+    category: "Music",
+    tech: ["React", "Spotify API", "YouTube API", "Cloudflare Workers", "Tailwind CSS"],
+    featured: true,
+    color: "#f59e0b",
+    image: "/images/projects/casa24records-hero.png",
+  },
+  {
     slug: "massport",
     title: "Massport",
     url: "https://massport507.com",
@@ -38,19 +51,6 @@ export const projects: Project[] = [
     featured: true,
     color: "#3b82f6",
     image: "/images/projects/microclean-hero.png",
-  },
-  {
-    slug: "casa24records",
-    title: "Casa 24 Records",
-    url: "https://casa24records.info",
-    description: "Independent hip-hop collective from Panama. Seven artists creating genre-fluid music spanning rap, R&B, indie, and Latin styles.",
-    longDescription: "Casa 24 Records is the digital home of an independent hip-hop collective from Panama City. The platform showcases seven artists who create genre-fluid music spanning rap, R&B, indie, and Latin styles. It integrates with Spotify and YouTube APIs to display the latest releases, streaming stats, and music videos, serving as both a promotional tool and fan hub.",
-    role: "Founder & Developer",
-    category: "Music",
-    tech: ["React", "Spotify API", "YouTube API", "Cloudflare Workers", "Tailwind CSS"],
-    featured: true,
-    color: "#f59e0b",
-    image: "/images/projects/casa24records-hero.png",
   },
 ];
 
