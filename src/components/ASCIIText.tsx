@@ -30,9 +30,14 @@ uniform float uTime;
 uniform sampler2D uTexture;
 
 void main() {
+    float time = uTime;
     vec2 pos = vUv;
-    vec4 color = texture2D(uTexture, pos);
-    gl_FragColor = color;
+
+    float r = texture2D(uTexture, pos + cos(time * 2. - time + pos.x) * .01).r;
+    float g = texture2D(uTexture, pos + tan(time * .5 + pos.x - time) * .01).g;
+    float b = texture2D(uTexture, pos - cos(time * 2. + time + pos.y) * .01).b;
+    float a = texture2D(uTexture, pos).a;
+    gl_FragColor = vec4(r, g, b, a);
 }
 `;
 
@@ -412,8 +417,12 @@ class CanvAscii {
   }
 
   render() {
+    const time = new Date().getTime() * 0.001;
+
     this.textCanvas.render();
     this.texture.needsUpdate = true;
+
+    (this.mesh.material as THREE.ShaderMaterial).uniforms.uTime.value = Math.sin(time);
 
     this.filter.render(this.scene, this.camera);
   }

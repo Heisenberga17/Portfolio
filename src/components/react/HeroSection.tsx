@@ -97,13 +97,13 @@ export default function HeroSection() {
       {/* Main content */}
       <div className="relative z-[2] text-center w-full max-w-[900px] px-6">
         {/* ASCIIText heading */}
-        <div className="relative w-full h-[300px] md:h-[350px]">
+        <div className="relative w-full h-[250px] md:h-[300px]">
           <ASCIIText
             text="Heisen's Den"
             asciiFontSize={8}
-            textFontSize={200}
+            textFontSize={150}
             textColor="#fdf9f3"
-            planeBaseHeight={8}
+            planeBaseHeight={6}
             enableWaves={false}
           />
         </div>
