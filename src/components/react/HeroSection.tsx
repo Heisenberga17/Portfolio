@@ -3,7 +3,6 @@ import SplitText from "@/components/SplitText";
 import GradientText from "@/components/GradientText";
 import BlurText from "@/components/BlurText";
 import Squares from "@/components/Squares";
-import Magnet from "@/components/Magnet";
 
 const PixelTrail = lazy(() => import("@/components/PixelTrail"));
 
@@ -138,34 +137,30 @@ export default function HeroSection() {
           />
         </div>
 
-        {/* CTAs with Magnet hover effect */}
+        {/* CTAs */}
         <div className="mt-10 flex gap-4 justify-center flex-wrap">
-          <Magnet padding={60} magnetStrength={3}>
-            <a
-              href="/projects"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-accent-primary text-[#F0E6D3] font-heading font-semibold text-[0.95rem] rounded-[10px] no-underline cursor-pointer shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(45,87,65,0.35),0_8px_24px_rgba(0,0,0,0.3)]"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="7" height="7" />
-                <rect x="14" y="3" width="7" height="7" />
-                <rect x="14" y="14" width="7" height="7" />
-                <rect x="3" y="14" width="7" height="7" />
-              </svg>
-              View My Work
-            </a>
-          </Magnet>
-          <Magnet padding={60} magnetStrength={3}>
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-transparent text-accent-secondary font-heading font-semibold text-[0.95rem] border-[1.5px] border-accent-secondary rounded-[10px] no-underline cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-secondary/8 hover:shadow-[0_0_24px_rgba(212,168,67,0.2),0_8px_24px_rgba(0,0,0,0.2)]"
-            >
-              Get In Touch
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </a>
-          </Magnet>
+          <a
+            href="/projects"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-accent-primary text-[#F0E6D3] font-heading font-semibold text-[0.95rem] rounded-[10px] no-underline cursor-pointer shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(45,87,65,0.35),0_8px_24px_rgba(0,0,0,0.3)]"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+            View My Work
+          </a>
+          <a
+            href="/contact"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-transparent text-accent-secondary font-heading font-semibold text-[0.95rem] border-[1.5px] border-accent-secondary rounded-[10px] no-underline cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-secondary/8 hover:shadow-[0_0_24px_rgba(212,168,67,0.2),0_8px_24px_rgba(0,0,0,0.2)]"
+          >
+            Get In Touch
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
         </div>
       </div>
 
