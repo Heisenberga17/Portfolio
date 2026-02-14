@@ -129,12 +129,12 @@ class AsciiFilter {
       this.pre.style.padding = '0';
       this.pre.style.lineHeight = '1em';
       this.pre.style.position = 'absolute';
-      this.pre.style.left = '50%';
-      this.pre.style.top = '50%';
-      this.pre.style.transform = 'translate(-50%, -50%)';
+      this.pre.style.left = '0';
+      this.pre.style.top = '0';
+      this.pre.style.overflow = 'hidden';
       this.pre.style.zIndex = '9';
       this.pre.style.backgroundAttachment = 'fixed';
-      this.pre.style.mixBlendMode = 'difference';
+      this.pre.style.mixBlendMode = 'normal';
     }
   }
 
@@ -389,6 +389,17 @@ class CanvAscii {
     this.height = h;
 
     this.camera.aspect = w / h;
+
+    // Ensure the full text plane is visible on narrow viewports
+    if (this.mesh) {
+      const geom = this.mesh.geometry as THREE.PlaneGeometry;
+      const planeW = geom.parameters.width;
+      const halfW = planeW / 2;
+      const vFov = (45 * Math.PI) / 360; // half FOV in radians
+      const minZ = halfW / (Math.tan(vFov) * (w / h));
+      this.camera.position.z = Math.max(30, minZ + 2);
+    }
+
     this.camera.updateProjectionMatrix();
 
     this.filter.setSize(w, h);
@@ -596,7 +607,7 @@ export default function ASCIIText({
           -webkit-text-fill-color: transparent;
           -webkit-background-clip: text;
           z-index: 9;
-          mix-blend-mode: difference;
+          mix-blend-mode: normal;
         }
       `}</style>
     </div>

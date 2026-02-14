@@ -11,7 +11,7 @@ export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-primary">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-bg-primary">
       <style>{`
         .hero-grid-fade {
           position: absolute;
@@ -95,7 +95,7 @@ export default function HeroSection() {
       <div className="hero-glow-gold" />
 
       {/* ASCIIText heading — full width so it doesn't clip */}
-      <div className="relative z-[2] w-full h-[300px] md:h-[400px]">
+      <div className="relative z-[2] w-full h-[300px] md:h-[400px] overflow-hidden">
         <ASCIIText
           text="Heisen's Den"
           asciiFontSize={8}
