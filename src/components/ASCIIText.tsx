@@ -30,15 +30,9 @@ uniform float uTime;
 uniform sampler2D uTexture;
 
 void main() {
-    float time = uTime;
     vec2 pos = vUv;
-    
-    float move = sin(time + mouse) * 0.01;
-    float r = texture2D(uTexture, pos + cos(time * 2. - time + pos.x) * .01).r;
-    float g = texture2D(uTexture, pos + tan(time * .5 + pos.x - time) * .01).g;
-    float b = texture2D(uTexture, pos - cos(time * 2. + time + pos.y) * .01).b;
-    float a = texture2D(uTexture, pos).a;
-    gl_FragColor = vec4(r, g, b, a);
+    vec4 color = texture2D(uTexture, pos);
+    gl_FragColor = color;
 }
 `;
 
@@ -168,9 +162,7 @@ class AsciiFilter {
   }
 
   hue() {
-    const deg = (Math.atan2(this.dy, this.dx) * 180) / Math.PI;
-    this.deg += (deg - this.deg) * 0.075;
-    this.domElement.style.filter = `hue-rotate(${this.deg.toFixed(1)}deg)`;
+    // Disabled — keep brand colors stable
   }
 
   asciify(ctx: CanvasRenderingContext2D, w: number, h: number) {
@@ -420,23 +412,10 @@ class CanvAscii {
   }
 
   render() {
-    const time = new Date().getTime() * 0.001;
-
     this.textCanvas.render();
     this.texture.needsUpdate = true;
 
-    (this.mesh.material as THREE.ShaderMaterial).uniforms.uTime.value = Math.sin(time);
-
-    this.updateRotation();
     this.filter.render(this.scene, this.camera);
-  }
-
-  updateRotation() {
-    const x = map(this.mouse.y, 0, this.height, 0.5, -0.5);
-    const y = map(this.mouse.x, 0, this.width, -0.5, 0.5);
-
-    this.mesh.rotation.x += (x - this.mesh.rotation.x) * 0.05;
-    this.mesh.rotation.y += (y - this.mesh.rotation.y) * 0.05;
   }
 
   clear() {
@@ -603,7 +582,7 @@ export default function ASCIIText({
           position: absolute;
           left: 0;
           top: 0;
-          background-image: radial-gradient(circle, #ff6188 0%, #fc9867 50%, #ffd866 100%);
+          background-image: radial-gradient(circle, #2D5741 0%, #3A7055 50%, #D4A843 100%);
           background-attachment: fixed;
           -webkit-text-fill-color: transparent;
           -webkit-background-clip: text;
