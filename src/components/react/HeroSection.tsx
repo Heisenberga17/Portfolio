@@ -79,14 +79,14 @@ export default function HeroSection() {
       {/* PixelTrail mouse effect — lazy loaded, client only */}
       {mounted && (
         <Suspense fallback={null}>
-          <div className="absolute inset-0 z-[1] pointer-events-auto">
+          <div className="absolute inset-0 z-[1] pointer-events-auto opacity-50">
             <PixelTrail
-              gridSize={40}
-              trailSize={0.3}
-              maxAge={500}
-              interpolate={8}
+              gridSize={63}
+              trailSize={0.1}
+              maxAge={300}
+              interpolate={5}
               color="#D4A843"
-              gooeyFilter={{ id: "hero-goo", strength: 10 }}
+              gooeyFilter={{ id: "hero-goo", strength: 6 }}
             />
           </div>
         </Suspense>
