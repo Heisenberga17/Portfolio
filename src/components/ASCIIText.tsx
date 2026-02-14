@@ -591,7 +591,7 @@ export default function ASCIIText({
           position: absolute;
           left: 0;
           top: 0;
-          background-image: radial-gradient(circle, #2D5741 0%, #3A7055 50%, #D4A843 100%);
+          background-image: radial-gradient(circle at 30% 40%, #D4A843 0%, #3A7055 35%, #2D5741 55%, #D4A843 75%, #3A7055 100%);
           background-attachment: fixed;
           -webkit-text-fill-color: transparent;
           -webkit-background-clip: text;
