@@ -94,22 +94,22 @@ export default function HeroSection() {
       <div className="hero-glow-green" />
       <div className="hero-glow-gold" />
 
-      {/* Main content */}
-      <div className="relative z-[2] text-center w-full max-w-[900px] px-6">
-        {/* ASCIIText heading */}
-        <div className="relative w-full h-[250px] md:h-[300px]">
-          <ASCIIText
-            text="Heisen's Den"
-            asciiFontSize={8}
-            textFontSize={150}
-            textColor="#fdf9f3"
-            planeBaseHeight={6}
-            enableWaves={false}
-          />
-        </div>
+      {/* ASCIIText heading — full width so it doesn't clip */}
+      <div className="relative z-[2] w-full h-[300px] md:h-[400px]">
+        <ASCIIText
+          text="Heisen's Den"
+          asciiFontSize={8}
+          textFontSize={200}
+          textColor="#fdf9f3"
+          planeBaseHeight={8}
+          enableWaves={false}
+        />
+      </div>
 
+      {/* Content below the heading */}
+      <div className="relative z-[2] text-center w-full max-w-[900px] px-6">
         {/* Tagline: BlurText reveal */}
-        <div className="mt-4 max-w-[540px] mx-auto">
+        <div className="max-w-[540px] mx-auto">
           <BlurText
             text={TAGLINE}
             delay={80}
