@@ -15,12 +15,12 @@ interface ProjectCardSwapProps {
 
 export default function ProjectCardSwap({ projects }: ProjectCardSwapProps) {
   return (
-    <div className="relative w-full flex justify-center" style={{ height: 480 }}>
+    <div className="relative w-full flex justify-center" style={{ height: 460 }}>
       <CardSwap
-        width={340}
-        height={440}
-        cardDistance={45}
-        verticalDistance={50}
+        width={580}
+        height={380}
+        cardDistance={50}
+        verticalDistance={45}
         delay={4500}
         pauseOnHover={true}
         skewAmount={4}
