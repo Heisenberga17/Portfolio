@@ -11,8 +11,12 @@ const currentPath = Astro.url.pathname;
 
 <header class="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg-primary/80 backdrop-blur-md">
   <nav class="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
-    <a href="/" class="font-heading text-xl font-bold text-accent-secondary hover:text-accent-primary transition-colors">
-      Heisen's
+    <a href="/" class="flex items-center gap-2 transition-opacity hover:opacity-80">
+      <img
+        src="/images/heisen.jpg"
+        alt="Heisen's Den"
+        class="h-9 w-9 rounded-full object-cover object-top border-2 border-accent-secondary"
+      />
     </a>
 
     <ul class="hidden md:flex items-center gap-8">
