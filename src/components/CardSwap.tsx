@@ -6,11 +6,18 @@ import React, {
   ReactElement,
   ReactNode,
   RefObject,
+  useCallback,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useRef
 } from 'react';
 import gsap from 'gsap';
+
+export interface CardSwapHandle {
+  next: () => void;
+  prev: () => void;
+}
 
 export interface CardSwapProps {
   width?: number | string;
@@ -20,6 +27,7 @@ export interface CardSwapProps {
   delay?: number;
   pauseOnHover?: boolean;
   onCardClick?: (idx: number) => void;
+  onSwap?: (frontIndex: number) => void;
   skewAmount?: number;
   easing?: 'linear' | 'elastic';
   children: ReactNode;
@@ -66,7 +74,7 @@ const placeNow = (el: HTMLElement, slot: Slot, skew: number) =>
     force3D: true
   });
 
-const CardSwap: React.FC<CardSwapProps> = ({
+const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(({
   width = 500,
   height = 400,
   cardDistance = 60,
@@ -74,10 +82,11 @@ const CardSwap: React.FC<CardSwapProps> = ({
   delay = 5000,
   pauseOnHover = false,
   onCardClick,
+  onSwap,
   skewAmount = 6,
   easing = 'elastic',
   children
-}) => {
+}, ref) => {
   const config =
     easing === 'elastic'
       ? {
@@ -101,17 +110,24 @@ const CardSwap: React.FC<CardSwapProps> = ({
   const refs = useMemo<CardRef[]>(() => childArr.map(() => React.createRef<HTMLDivElement>()), [childArr.length]);
 
   const order = useRef<number[]>(Array.from({ length: childArr.length }, (_, i) => i));
+  const animating = useRef(false);
 
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   const intervalRef = useRef<number>(0);
   const container = useRef<HTMLDivElement>(null);
 
+  const resetInterval = useCallback((swapFn: () => void) => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = window.setInterval(swapFn, delay);
+  }, [delay]);
+
   useEffect(() => {
     const total = refs.length;
     refs.forEach((r, i) => placeNow(r.current!, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
 
-    const swap = () => {
-      if (order.current.length < 2) return;
+    const swapNext = () => {
+      if (order.current.length < 2 || animating.current) return;
+      animating.current = true;
 
       const [front, ...rest] = order.current;
       const elFront = refs[front].current!;
@@ -165,10 +181,73 @@ const CardSwap: React.FC<CardSwapProps> = ({
 
       tl.call(() => {
         order.current = [...rest, front];
+        animating.current = false;
+        onSwap?.(order.current[0]);
       });
     };
 
-    intervalRef.current = window.setInterval(swap, delay);
+    const swapPrev = () => {
+      if (order.current.length < 2 || animating.current) return;
+      animating.current = true;
+
+      const cur = order.current;
+      const back = cur[cur.length - 1];
+      const elBack = refs[back].current!;
+      const tl = gsap.timeline();
+      tlRef.current = tl;
+
+      // Move the back card off-screen below
+      tl.set(elBack, { y: '+=500', zIndex: refs.length + 1 });
+
+      // Demote all current cards one slot back
+      tl.addLabel('demote', 0);
+      cur.slice(0, -1).forEach((idx, i) => {
+        const el = refs[idx].current!;
+        const slot = makeSlot(i + 1, cardDistance, verticalDistance, refs.length);
+        tl.set(el, { zIndex: slot.zIndex }, 'demote');
+        tl.to(
+          el,
+          {
+            x: slot.x,
+            y: slot.y,
+            z: slot.z,
+            duration: config.durMove,
+            ease: config.ease
+          },
+          `demote+=${i * 0.15}`
+        );
+      });
+
+      // Bring back card to front slot
+      const frontSlot = makeSlot(0, cardDistance, verticalDistance, refs.length);
+      tl.addLabel('arrive', `demote+=${config.durMove * 0.3}`);
+      tl.call(() => {
+        gsap.set(elBack, { zIndex: frontSlot.zIndex });
+      }, undefined, 'arrive');
+      tl.to(
+        elBack,
+        {
+          x: frontSlot.x,
+          y: frontSlot.y,
+          z: frontSlot.z,
+          duration: config.durReturn,
+          ease: config.ease
+        },
+        'arrive'
+      );
+
+      tl.call(() => {
+        order.current = [back, ...cur.slice(0, -1)];
+        animating.current = false;
+        onSwap?.(order.current[0]);
+      });
+    };
+
+    // Store swap functions so imperative handle can access them
+    swapNextRef.current = swapNext;
+    swapPrevRef.current = swapPrev;
+
+    intervalRef.current = window.setInterval(swapNext, delay);
 
     if (pauseOnHover) {
       const node = container.current!;
@@ -178,7 +257,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
       };
       const resume = () => {
         tlRef.current?.play();
-        intervalRef.current = window.setInterval(swap, delay);
+        intervalRef.current = window.setInterval(swapNext, delay);
       };
       node.addEventListener('mouseenter', pause);
       node.addEventListener('mouseleave', resume);
@@ -190,6 +269,20 @@ const CardSwap: React.FC<CardSwapProps> = ({
     }
     return () => clearInterval(intervalRef.current);
   }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing]);
+
+  const swapNextRef = useRef<() => void>(() => {});
+  const swapPrevRef = useRef<() => void>(() => {});
+
+  useImperativeHandle(ref, () => ({
+    next: () => {
+      swapNextRef.current();
+      resetInterval(swapNextRef.current);
+    },
+    prev: () => {
+      swapPrevRef.current();
+      resetInterval(swapNextRef.current);
+    }
+  }), [resetInterval]);
 
   const rendered = childArr.map((child, i) =>
     isValidElement<CardProps>(child)
@@ -214,6 +307,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
       {rendered}
     </div>
   );
-};
+});
+CardSwap.displayName = 'CardSwap';
 
 export default CardSwap;
