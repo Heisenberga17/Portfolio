@@ -9,7 +9,20 @@ const TAGLINE = "Developer crafting web platforms and digital experiences";
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const [trailConfig, setTrailConfig] = useState({ gridSize: 50, trailSize: 0.15 });
+
+  useEffect(() => {
+    setMounted(true);
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 640) setTrailConfig({ gridSize: 25, trailSize: 0.25 });
+      else if (w < 1024) setTrailConfig({ gridSize: 35, trailSize: 0.2 });
+      else setTrailConfig({ gridSize: 50, trailSize: 0.15 });
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-bg-primary">
       <style>{`
@@ -79,12 +92,12 @@ export default function HeroSection() {
         <Suspense fallback={null}>
           <div className="absolute inset-0 z-[1] pointer-events-auto">
             <PixelTrail
-              gridSize={50}
-              trailSize={0.15}
-              maxAge={400}
-              interpolate={6}
+              gridSize={trailConfig.gridSize}
+              trailSize={trailConfig.trailSize}
+              maxAge={500}
+              interpolate={8}
               color="#3A7055"
-              gooeyFilter={{ id: "hero-goo", strength: 8 }}
+              gooeyStrength={0.6}
             />
           </div>
         </Suspense>

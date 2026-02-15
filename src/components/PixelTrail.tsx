@@ -1,19 +1,7 @@
 import React, { useMemo } from 'react';
-import { Canvas, useThree, CanvasProps, ThreeEvent } from '@react-three/fiber';
+import { Canvas, useThree, ThreeEvent } from '@react-three/fiber';
 import { shaderMaterial, useTrailTexture } from '@react-three/drei';
 import * as THREE from 'three';
-
-interface GooeyFilterProps {
-  id?: string;
-  strength?: number;
-}
-
-interface DotMaterialUniforms {
-  resolution: THREE.Vector2;
-  mouseTrail: THREE.Texture | null;
-  gridSize: number;
-  pixelColor: THREE.Color;
-}
 
 interface SceneProps {
   gridSize: number;
@@ -22,6 +10,7 @@ interface SceneProps {
   interpolate: number;
   easingFunction: (x: number) => number;
   pixelColor: string;
+  gooeyStrength: number;
 }
 
 interface PixelTrailProps {
@@ -30,45 +19,30 @@ interface PixelTrailProps {
   maxAge?: number;
   interpolate?: number;
   easingFunction?: (x: number) => number;
-  canvasProps?: Partial<CanvasProps>;
-  glProps?: WebGLContextAttributes & { powerPreference?: string };
-  gooeyFilter?: { id: string; strength: number };
   color?: string;
   className?: string;
+  gooeyStrength?: number;
 }
-
-const GooeyFilter: React.FC<GooeyFilterProps> = ({ id = 'goo-filter', strength = 10 }) => {
-  return (
-    <svg className="absolute overflow-hidden z-1">
-      <defs>
-        <filter id={id}>
-          <feGaussianBlur in="SourceGraphic" stdDeviation={strength} result="blur" />
-          <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
-          <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-        </filter>
-      </defs>
-    </svg>
-  );
-};
 
 const DotMaterial = shaderMaterial(
   {
     resolution: new THREE.Vector2(),
     mouseTrail: null,
     gridSize: 100,
-    pixelColor: new THREE.Color('#ffffff')
+    pixelColor: new THREE.Color('#ffffff'),
+    gooeyStrength: 0.5
   },
-  /* glsl vertex shader */ `
-    varying vec2 vUv;
+  /* vertex */ `
     void main() {
       gl_Position = vec4(position.xy, 0.0, 1.0);
     }
   `,
-  /* glsl fragment shader */ `
+  /* fragment */ `
     uniform vec2 resolution;
     uniform sampler2D mouseTrail;
     uniform float gridSize;
     uniform vec3 pixelColor;
+    uniform float gooeyStrength;
 
     vec2 coverUv(vec2 uv) {
       vec2 s = resolution.xy / max(resolution.x, resolution.y);
@@ -76,37 +50,55 @@ const DotMaterial = shaderMaterial(
       return clamp(newUv, 0.0, 1.0);
     }
 
-    float sdfCircle(vec2 p, float r) {
-        return length(p - 0.5) - r;
-    }
-
     void main() {
       vec2 screenUv = gl_FragCoord.xy / resolution;
       vec2 uv = coverUv(screenUv);
 
-      vec2 gridUv = fract(uv * gridSize);
+      float cellSize = 1.0 / gridSize;
       vec2 gridUvCenter = (floor(uv * gridSize) + 0.5) / gridSize;
+      vec2 cellUv = fract(uv * gridSize);
 
-      float trail = texture2D(mouseTrail, gridUvCenter).r;
+      // 5x5 Gaussian-weighted blur for organic gooey merging (GPU-side)
+      float blur = 0.0;
+      float total = 0.0;
+      for (int x = -2; x <= 2; x++) {
+        for (int y = -2; y <= 2; y++) {
+          vec2 offset = vec2(float(x), float(y)) * cellSize;
+          float d = length(vec2(float(x), float(y)));
+          float weight = exp(-d * d * 0.4);
+          blur += texture2D(mouseTrail, gridUvCenter + offset).r * weight;
+          total += weight;
+        }
+      }
+      blur /= total;
 
-      gl_FragColor = vec4(pixelColor, trail);
+      // Smooth threshold — creates organic blob merging
+      float goo = smoothstep(0.04, 0.18 + gooeyStrength * 0.12, blur);
+
+      // Soft rounded pixel edges
+      float e = 0.08;
+      float pixelMask = smoothstep(0.0, e, cellUv.x) * smoothstep(0.0, e, 1.0 - cellUv.x)
+                       * smoothstep(0.0, e, cellUv.y) * smoothstep(0.0, e, 1.0 - cellUv.y);
+
+      gl_FragColor = vec4(pixelColor, goo * pixelMask);
     }
   `
 );
 
-function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixelColor }: SceneProps) {
+function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixelColor, gooeyStrength }: SceneProps) {
   const size = useThree(s => s.size);
   const viewport = useThree(s => s.viewport);
 
   const dotMaterial = useMemo(() => new DotMaterial(), []);
   dotMaterial.uniforms.pixelColor.value = new THREE.Color(pixelColor);
+  dotMaterial.uniforms.gooeyStrength.value = gooeyStrength;
 
   const [trail, onMove] = useTrailTexture({
-    size: 512,
+    size: 1024,
     radius: trailSize,
     maxAge: maxAge,
     interpolate: interpolate || 0.1,
-    ease: easingFunction || ((x: number) => x)
+    ease: easingFunction
   }) as [THREE.Texture | null, (e: ThreeEvent<PointerEvent>) => void];
 
   if (trail) {
@@ -136,35 +128,30 @@ export default function PixelTrail({
   trailSize = 0.1,
   maxAge = 250,
   interpolate = 5,
-  easingFunction = (x: number) => x,
-  canvasProps = {},
-  glProps = {
-    antialias: false,
-    powerPreference: 'high-performance',
-    alpha: true
-  },
-  gooeyFilter,
+  easingFunction = (x: number) => 1 - Math.pow(1 - x, 3),
   color = '#ffffff',
-  className = ''
+  className = '',
+  gooeyStrength = 0.5
 }: PixelTrailProps) {
   return (
-    <>
-      {gooeyFilter && <GooeyFilter id={gooeyFilter.id} strength={gooeyFilter.strength} />}
-      <Canvas
-        {...canvasProps}
-        gl={glProps}
-        className={`absolute z-1 ${className}`}
-        style={gooeyFilter ? { filter: `url(#${gooeyFilter.id})` } : undefined}
-      >
-        <Scene
-          gridSize={gridSize}
-          trailSize={trailSize}
-          maxAge={maxAge}
-          interpolate={interpolate}
-          easingFunction={easingFunction}
-          pixelColor={color}
-        />
-      </Canvas>
-    </>
+    <Canvas
+      gl={{
+        antialias: false,
+        powerPreference: 'high-performance',
+        alpha: true
+      }}
+      dpr={[1, 1.5]}
+      className={`absolute z-1 ${className}`}
+    >
+      <Scene
+        gridSize={gridSize}
+        trailSize={trailSize}
+        maxAge={maxAge}
+        interpolate={interpolate}
+        easingFunction={easingFunction}
+        pixelColor={color}
+        gooeyStrength={gooeyStrength}
+      />
+    </Canvas>
   );
 }
