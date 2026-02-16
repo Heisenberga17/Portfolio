@@ -1,8 +1,8 @@
 ---
 title: "Casa 24 Records"
-description: "Independent hip-hop collective from Panama. Seven artists creating genre-fluid music spanning rap, R&B, indie, and Latin styles."
+description: "Analytics platform, drum machine, and digital archive for a Panama City music collective. ~12,000 lines of handwritten code with a retro terminal aesthetic."
 image: "/images/projects/casa24records-hero.png"
-tags: ["React", "Spotify API", "YouTube API", "Cloudflare Workers", "Tailwind CSS"]
+tags: ["Astro", "React", "TypeScript", "Web Audio API", "Recharts", "Python", "Cloudflare Workers"]
 category: "Music"
 featured: true
 liveUrl: "https://casa24records.info"
@@ -12,24 +12,35 @@ order: 1
 
 ## Overview
 
-Casa 24 Records is an independent hip-hop collective from Panama City. The website serves as the digital hub for seven artists who create genre-fluid music spanning rap, R&B, indie, and Latin styles.
+Casa 24 Records is seven artists in a house in Panama City making genre-fluid music — rap, R&B, indie, bolero, salsa, punk — with zero labels and zero permission. This is their digital headquarters: part analytics platform, part creative studio, part digital archive, part origin story.
+
+The whole thing is a single Astro static site simulating an SPA with a retro green-on-dark terminal aesthetic, deployed to Cloudflare Pages. ~12,000 lines of handwritten code across TypeScript, React, vanilla JS, Python, and CSS.
 
 ## My Role
 
-As founder and developer, I conceptualized and built the entire digital presence for the collective, integrating multiple music platform APIs to create a unified experience.
+Founder and sole developer. Designed the architecture, built every module, wrote the data pipeline, deployed the infrastructure, and created the Claude Code skill guides for the codebase.
 
 ## Key Features
 
-- **Artist Profiles** - Individual pages for each of the seven artists with bios and discographies
-- **Spotify Integration** - Live streaming data, latest releases, and embedded players
-- **YouTube Feed** - Music videos and visual content pulled directly from the YouTube API
-- **Release Calendar** - Upcoming releases and events for fans to follow
-- **Brand Identity** - Cohesive visual identity across the platform
+- **Collective Analytics Dashboard** — 1,189-line React island with Recharts pulling daily metrics from Spotify, YouTube, Instagram, and Discord. Artist selector, platform-colored hover effects, XSS-sanitized data rendering
+- **Beat Lab Drum Machine** — 3,220-line vanilla JS sequencer built on the Web Audio API. 8 instruments, 10+ sound kits, effects chain (reverb, delay, filter, phaser, bit crusher), per-instrument controls, WAV export via OfflineAudioContext
+- **LIFE@24 Magazine Viewer** — TypeScript module streaming PDF magazines from Google Drive with thumbnail grid, fullscreen iframe preview, date parsing for EN/ES, and credential caching with 5-min TTL
+- **untitled unmastered Audio Player** — TypeScript MP3 streamer from Google Drive with a markdown lore system, custom markdown parser, client-side rate limiting, and iOS-specific fixes
+- **About Section** — 828 lines of static HTML: 7 artist cards, origin story, sound philosophy, creative process, platform links, and the "WE OUT HERE" manifesto
+- **Automated Data Pipeline** — Python script (1,154 lines) collecting metrics from 4 platforms daily via GitHub Actions at 02:30 UTC, writing to JSON snapshots and CSV exports
+
+## Architecture
+
+Five sections rendered simultaneously in the DOM, one visible at a time. `main.ts` orchestrates module lifecycle — polling `window` for IIFE module registration, calling `cleanup()`/`initialize()` on navigation, pushing state via `history.pushState()` with hash routing support. The React analytics island mounts independently via `client:only="react"`.
+
+A Cloudflare Worker serves as the credential vault with CORS-restricted public and authenticated endpoints. The frontend caches credentials client-side with TTL, validates URLs against an allowlist, and sanitizes all inputs.
 
 ## Challenges & Solutions
 
-Integrating multiple third-party APIs (Spotify, YouTube) while maintaining fast load times was the primary challenge. I implemented a caching layer using Cloudflare Workers KV that refreshes data periodically, ensuring fresh content without hitting API rate limits on every page load.
+The main challenge was making a static site behave like a full SPA while keeping five independent modules (two TypeScript IIFEs, one React island, one vanilla JS audio engine, and a navigation router) cooperating without a shared framework. The solution was a window-polling module discovery system with a cleanup/initialize contract, letting each module own its lifecycle while `main.ts` handles transitions, history state, and CSS entrance animations.
+
+The drum machine lives outside Astro's build pipeline entirely (`<script is:inline>`) because Web Audio API scheduling benefits from raw AudioContext access without bundler interference.
 
 ## Results
 
-The platform has become the central hub for the collective's digital presence, providing fans with a single destination to discover music, watch videos, and stay updated on new releases.
+The platform serves as the central hub for the collective — a single destination where fans discover music, watch videos, read magazines, and play with a professional drum machine, all wrapped in a cohesive retro terminal identity.
