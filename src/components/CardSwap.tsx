@@ -125,19 +125,13 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(({
     const total = refs.length;
     refs.forEach((r, i) => placeNow(r.current!, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
 
-    const setCardsPointerEvents = (value: string) => {
-      refs.forEach((r) => {
-        if (r.current) r.current.style.pointerEvents = value;
-      });
-    };
-
     const swapNext = () => {
       if (order.current.length < 2 || animating.current) return;
       animating.current = true;
-      setCardsPointerEvents('none');
 
       const [front, ...rest] = order.current;
       const elFront = refs[front].current!;
+      elFront.style.pointerEvents = 'none';
       const tl = gsap.timeline();
       tlRef.current = tl;
 
@@ -189,7 +183,7 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(({
       tl.call(() => {
         order.current = [...rest, front];
         animating.current = false;
-        setCardsPointerEvents('');
+        elFront.style.pointerEvents = '';
         onSwap?.(order.current[0]);
       });
     };
@@ -197,11 +191,11 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(({
     const swapPrev = () => {
       if (order.current.length < 2 || animating.current) return;
       animating.current = true;
-      setCardsPointerEvents('none');
 
       const cur = order.current;
       const back = cur[cur.length - 1];
       const elBack = refs[back].current!;
+      elBack.style.pointerEvents = 'none';
       const tl = gsap.timeline();
       tlRef.current = tl;
 
@@ -248,7 +242,7 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(({
       tl.call(() => {
         order.current = [back, ...cur.slice(0, -1)];
         animating.current = false;
-        setCardsPointerEvents('');
+        elBack.style.pointerEvents = '';
         onSwap?.(order.current[0]);
       });
     };
