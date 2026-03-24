@@ -125,8 +125,16 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(({
     const total = refs.length;
     refs.forEach((r, i) => placeNow(r.current!, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
 
+    const finishCurrent = () => {
+      if (animating.current && tlRef.current) {
+        tlRef.current.progress(1, false);
+        tlRef.current = null;
+      }
+    };
+
     const swapNext = () => {
-      if (order.current.length < 2 || animating.current) return;
+      if (order.current.length < 2) return;
+      finishCurrent();
       animating.current = true;
 
       const [front, ...rest] = order.current;
@@ -189,7 +197,8 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(({
     };
 
     const swapPrev = () => {
-      if (order.current.length < 2 || animating.current) return;
+      if (order.current.length < 2) return;
+      finishCurrent();
       animating.current = true;
 
       const cur = order.current;
