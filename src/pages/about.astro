@@ -3,8 +3,9 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/astro/Section.astro';
 import { skills, skillCategories } from '@data/skills';
 
-const grouped = Object.fromEntries(
-  skillCategories.map((cat) => [cat, skills.filter((s) => s.category === cat)])
+const dailySkills = skills.filter((s) => s.daily);
+const otherGrouped = Object.fromEntries(
+  skillCategories.map((cat) => [cat, skills.filter((s) => s.category === cat && !s.daily)])
 );
 
 const categoryLabels: Record<string, string> = {
@@ -113,25 +114,43 @@ const categoryLabels: Record<string, string> = {
     </div>
   </Section>
 
-  <!-- Skills -->
+  <!-- Daily Drivers -->
   <Section id="skills">
-    <h2 class="text-2xl md:text-3xl font-bold leading-tight mb-10">Tools I use</h2>
+    <h2 class="text-2xl md:text-3xl font-bold leading-tight mb-4">Daily drivers</h2>
+    <p class="text-text-secondary text-sm mb-8">The tools I reach for every day.</p>
+
+    <div class="flex flex-wrap gap-2">
+      {dailySkills.map((skill) => (
+        <span class="px-3 py-1.5 rounded-lg bg-accent-primary/10 border border-accent-primary/30 text-sm text-accent-primary font-medium">
+          {skill.name}
+        </span>
+      ))}
+    </div>
+  </Section>
+
+  <!-- All Tools -->
+  <Section background="secondary">
+    <h2 class="text-2xl md:text-3xl font-bold leading-tight mb-4">Tools I've used</h2>
+    <p class="text-text-secondary text-sm mb-8">Everything else I've shipped projects with.</p>
 
     <div class="grid gap-10 md:grid-cols-2">
-      {skillCategories.map((cat) => (
-        <div>
-          <h3 class="font-heading text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">
-            {categoryLabels[cat]}
-          </h3>
-          <div class="flex flex-wrap gap-2">
-            {grouped[cat].map((skill) => (
-              <span class="px-3 py-1.5 rounded-lg bg-bg-card border border-border text-sm text-text-primary font-medium">
-                {skill.name}
-              </span>
-            ))}
+      {skillCategories.map((cat) => {
+        const items = otherGrouped[cat];
+        return items.length > 0 && (
+          <div>
+            <h3 class="font-heading text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">
+              {categoryLabels[cat]}
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {items.map((skill) => (
+                <span class="px-3 py-1.5 rounded-lg bg-bg-card border border-border text-sm text-text-primary font-medium">
+                  {skill.name}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </Section>
 </BaseLayout>
