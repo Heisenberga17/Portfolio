@@ -151,15 +151,7 @@ export default function ProjectFilter({ projects }: ProjectFilterProps) {
       </div>
 
       {filtered.length === 0 && (
-        <p
-          style={{
-            textAlign: "center",
-            color: "var(--color-text-secondary)",
-            fontFamily: "var(--font-sans)",
-            fontSize: "0.95rem",
-            marginTop: 48,
-          }}
-        >
+        <p className="text-center text-text-secondary font-sans text-[0.95rem] mt-12">
           No projects in this category yet.
         </p>
       )}

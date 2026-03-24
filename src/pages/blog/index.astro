@@ -1,0 +1,53 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/astro/Section.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout
+  title="Blog | Heisen's Den"
+  description="Articles on web development, React, Astro, and lessons from building real products. Written by Fernando from Panama City."
+>
+  <Section>
+    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-14">Blog</h1>
+
+    {posts.length === 0 ? (
+      <div class="text-center py-16">
+        <p class="text-text-secondary text-lg mb-2">No posts yet.</p>
+        <p class="text-text-secondary text-sm">Check back soon — articles are on the way.</p>
+      </div>
+    ) : (
+      <div class="grid gap-8">
+        {posts.map((post) => (
+          <a
+            href={`/blog/${post.id}`}
+            class="group block rounded-xl border border-border bg-bg-card p-6 transition-all hover:border-accent-primary/50 hover:shadow-[0_0_24px_rgba(45,87,65,0.1)]"
+          >
+            <time class="font-mono text-xs text-text-secondary tracking-wide">
+              {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+            <h2 class="text-xl font-bold mt-2 mb-2 group-hover:text-accent-primary transition-colors">
+              {post.data.title}
+            </h2>
+            <p class="text-text-secondary text-sm leading-relaxed">
+              {post.data.description}
+            </p>
+            {post.data.tags.length > 0 && (
+              <div class="flex flex-wrap gap-2 mt-4">
+                {post.data.tags.map((tag: string) => (
+                  <span class="text-xs font-mono px-2 py-0.5 rounded-md bg-bg-secondary text-text-secondary">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </a>
+        ))}
+      </div>
+    )}
+  </Section>
+</BaseLayout>

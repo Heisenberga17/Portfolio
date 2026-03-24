@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import ASCIIText from "@/components/ASCIIText";
 import BlurText from "@/components/BlurText";
 import Squares from "@/components/Squares";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const PixelTrail = lazy(() => import("@/components/PixelTrail"));
 
@@ -10,6 +11,7 @@ const TAGLINE = "Developer crafting web platforms and digital experiences";
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
   const [trailConfig, setTrailConfig] = useState({ gridSize: 50, trailSize: 0.15 });
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     setMounted(true);
@@ -35,22 +37,20 @@ export default function HeroSection() {
         }
         .hero-glow-green {
           position: absolute;
-          width: 420px; height: 420px;
+          width: 600px; height: 600px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(45,87,65,0.18) 0%, transparent 70%);
-          top: 15%; left: 10%;
-          filter: blur(80px);
+          background: radial-gradient(circle, rgba(45,87,65,0.14) 0%, transparent 55%);
+          top: 10%; left: 5%;
           pointer-events: none;
           z-index: 0;
           animation: hero-glow-drift 8s ease-in-out infinite alternate;
         }
         .hero-glow-gold {
           position: absolute;
-          width: 320px; height: 320px;
+          width: 480px; height: 480px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%);
-          bottom: 20%; right: 12%;
-          filter: blur(80px);
+          background: radial-gradient(circle, rgba(212,168,67,0.09) 0%, transparent 55%);
+          bottom: 15%; right: 8%;
           pointer-events: none;
           z-index: 0;
           animation: hero-glow-drift 10s ease-in-out 2s infinite alternate-reverse;
@@ -77,18 +77,20 @@ export default function HeroSection() {
       `}</style>
 
       {/* Squares animated grid background */}
-      <div className="absolute inset-0 z-0">
-        <Squares
-          direction="diagonal"
-          speed={0.3}
-          borderColor="rgba(45,87,65,0.08)"
-          squareSize={48}
-          hoverFillColor="rgba(45,87,65,0.04)"
-        />
-      </div>
+      {!reducedMotion && (
+        <div className="absolute inset-0 z-0">
+          <Squares
+            direction="diagonal"
+            speed={0.3}
+            borderColor="rgba(45,87,65,0.08)"
+            squareSize={48}
+            hoverFillColor="rgba(45,87,65,0.04)"
+          />
+        </div>
+      )}
 
       {/* PixelTrail mouse effect — lazy loaded, client only */}
-      {mounted && (
+      {mounted && !reducedMotion && (
         <Suspense fallback={null}>
           <div className="absolute inset-0 z-[1] pointer-events-auto">
             <PixelTrail
@@ -103,9 +105,9 @@ export default function HeroSection() {
         </Suspense>
       )}
 
-      <div className="hero-grid-fade" />
-      <div className="hero-glow-green" />
-      <div className="hero-glow-gold" />
+      <div className="hero-grid-fade" aria-hidden="true" />
+      <div className="hero-glow-green" aria-hidden="true" />
+      <div className="hero-glow-gold" aria-hidden="true" />
 
       {/* ASCIIText heading — full width so it doesn't clip */}
       <div className="relative z-[2] w-full h-[300px] md:h-[400px] overflow-hidden">
@@ -160,7 +162,7 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="hero-scroll-indicator">
+      <div className="hero-scroll-indicator" aria-hidden="true">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="6 9 12 15 18 9" />
         </svg>

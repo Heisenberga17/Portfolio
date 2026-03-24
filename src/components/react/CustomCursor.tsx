@@ -1,9 +1,11 @@
 import TargetCursor from '@/components/TargetCursor';
-
-// Add the class "cursor-target" to any element you want the cursor to target
-// beyond links and buttons (which are targeted by default).
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 export default function CustomCursor() {
+  const reducedMotion = useReducedMotion();
+
+  if (reducedMotion) return null;
+
   return (
     <TargetCursor
       targetSelector="a, button, .cursor-target"

@@ -26,6 +26,15 @@ const SUBJECT_OPTIONS = [
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const fieldClasses =
+  "w-full px-4 py-3 font-sans text-[0.9rem] text-text-primary bg-bg-secondary border border-border rounded-[10px] outline-none transition-[border-color,box-shadow] duration-250 ease-in-out focus:border-accent-primary focus:shadow-[0_0_0_3px_rgba(45,87,65,0.15)] data-[error]:border-error";
+
+const selectClasses =
+  "appearance-none bg-[right_16px_center] bg-no-repeat pr-10";
+
+const selectChevronUrl =
+  "url(\"data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23a3a3a3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")";
+
 export default function ContactForm() {
   const [form, setForm] = useState<FormData>({
     name: "",
@@ -62,7 +71,6 @@ export default function ContactForm() {
     const { name, value } = e.target;
     const next = { ...form, [name]: value };
     setForm(next);
-    // Re-validate the changed field if it was already touched
     if (touched.has(name)) {
       const v = validate(next);
       setErrors((prev) => ({ ...prev, [name]: v[name as keyof FormErrors] }));
@@ -85,10 +93,8 @@ export default function ContactForm() {
 
     setStatus("submitting");
 
-    // Placeholder: log to console; replace with actual API later
     try {
       await new Promise((resolve) => setTimeout(resolve, 1200));
-      console.log("[ContactForm] Submission:", form);
       setStatus("success");
       setForm({ name: "", email: "", subject: "", message: "" });
       setTouched(new Set());
@@ -98,144 +104,21 @@ export default function ContactForm() {
     }
   }
 
-  const fieldStyle = (fieldName: string): React.CSSProperties => ({
-    width: "100%",
-    padding: "12px 16px",
-    fontFamily: "var(--font-sans)",
-    fontSize: "0.9rem",
-    color: "var(--color-text-primary)",
-    background: "var(--color-bg-secondary)",
-    border: `1px solid ${
-      errors[fieldName as keyof FormErrors]
-        ? "var(--color-error)"
-        : "var(--color-border)"
-    }`,
-    borderRadius: 10,
-    outline: "none",
-    transition: "border-color 0.25s ease, box-shadow 0.25s ease",
-    boxSizing: "border-box" as const,
-  });
-
   return (
     <form onSubmit={handleSubmit} noValidate>
       <style>{`
-        .cf-field input:focus,
-        .cf-field textarea:focus,
-        .cf-field select:focus {
-          border-color: var(--color-accent-primary) !important;
-          box-shadow: 0 0 0 3px rgba(45,87,65,0.15);
-        }
-
-        .cf-label {
-          display: block;
-          font-family: var(--font-heading);
-          font-size: 0.8rem;
-          font-weight: 500;
-          color: var(--color-text-secondary);
-          margin-bottom: 6px;
-          letter-spacing: 0.03em;
-        }
-        .cf-error {
-          font-family: var(--font-mono);
-          font-size: 0.72rem;
-          color: var(--color-error);
-          margin-top: 4px;
-          letter-spacing: 0.02em;
-        }
-        .cf-field {
-          margin-bottom: 20px;
-        }
-
-        .cf-submit {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 14px 36px;
-          background: var(--color-accent-primary);
-          color: #F0E6D3;
-          font-family: var(--font-heading);
-          font-weight: 600;
-          font-size: 0.95rem;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
-          transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.2s ease, opacity 0.2s ease;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-          width: 100%;
-          justify-content: center;
-        }
-        .cf-submit:hover:not(:disabled) {
-          transform: translateY(-2px);
-          background: var(--color-accent-hover);
-          box-shadow: 0 0 24px rgba(45,87,65,0.3), 0 8px 24px rgba(0,0,0,0.3);
-        }
-        .cf-submit:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-
         @keyframes cf-spin {
           to { transform: rotate(360deg); }
         }
-        .cf-spinner {
-          width: 18px;
-          height: 18px;
-          border: 2px solid rgba(240,230,211,0.3);
-          border-top-color: #F0E6D3;
-          border-radius: 50%;
-          animation: cf-spin 0.6s linear infinite;
-        }
-
         @keyframes cf-status-in {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        .cf-status {
-          animation: cf-status-in 0.4s ease-out;
-          padding: 16px 20px;
-          border-radius: 10px;
-          font-family: var(--font-sans);
-          font-size: 0.9rem;
-          margin-top: 16px;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-        .cf-status--success {
-          background: rgba(34,197,94,0.08);
-          border: 1px solid rgba(34,197,94,0.2);
-          color: var(--color-success);
-        }
-        .cf-status--error {
-          background: rgba(239,68,68,0.08);
-          border: 1px solid rgba(239,68,68,0.2);
-          color: var(--color-error);
-        }
-
-        .cf-field select {
-          appearance: none;
-          background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23a3a3a3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-          background-repeat: no-repeat;
-          background-position: right 16px center;
-          padding-right: 40px;
-        }
-
-        .cf-row {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 0;
-        }
-        @media (min-width: 640px) {
-          .cf-row {
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-          }
-        }
       `}</style>
 
-      <div className="cf-row">
-        <div className="cf-field">
-          <label className="cf-label" htmlFor="cf-name">
+      <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-4">
+        <div className="mb-5">
+          <label className="block font-heading text-[0.8rem] font-medium text-text-secondary mb-1.5 tracking-[0.03em]" htmlFor="cf-name">
             Name
           </label>
           <input
@@ -246,15 +129,16 @@ export default function ContactForm() {
             value={form.name}
             onChange={handleChange}
             onBlur={handleBlur}
-            style={fieldStyle("name")}
+            className={fieldClasses}
+            data-error={errors.name ? "" : undefined}
             aria-describedby={errors.name ? "cf-name-error" : undefined}
             aria-invalid={!!errors.name}
           />
-          {errors.name && <p id="cf-name-error" role="alert" className="cf-error">{errors.name}</p>}
+          {errors.name && <p id="cf-name-error" role="alert" className="font-mono text-[0.72rem] text-error mt-1 tracking-[0.02em]">{errors.name}</p>}
         </div>
 
-        <div className="cf-field">
-          <label className="cf-label" htmlFor="cf-email">
+        <div className="mb-5">
+          <label className="block font-heading text-[0.8rem] font-medium text-text-secondary mb-1.5 tracking-[0.03em]" htmlFor="cf-email">
             Email
           </label>
           <input
@@ -265,16 +149,17 @@ export default function ContactForm() {
             value={form.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            style={fieldStyle("email")}
+            className={fieldClasses}
+            data-error={errors.email ? "" : undefined}
             aria-describedby={errors.email ? "cf-email-error" : undefined}
             aria-invalid={!!errors.email}
           />
-          {errors.email && <p id="cf-email-error" role="alert" className="cf-error">{errors.email}</p>}
+          {errors.email && <p id="cf-email-error" role="alert" className="font-mono text-[0.72rem] text-error mt-1 tracking-[0.02em]">{errors.email}</p>}
         </div>
       </div>
 
-      <div className="cf-field">
-        <label className="cf-label" htmlFor="cf-subject">
+      <div className="mb-5">
+        <label className="block font-heading text-[0.8rem] font-medium text-text-secondary mb-1.5 tracking-[0.03em]" htmlFor="cf-subject">
           Subject
         </label>
         <select
@@ -283,7 +168,9 @@ export default function ContactForm() {
           value={form.subject}
           onChange={handleChange}
           onBlur={handleBlur}
-          style={fieldStyle("subject")}
+          className={`${fieldClasses} ${selectClasses}`}
+          style={{ backgroundImage: selectChevronUrl }}
+          data-error={errors.subject ? "" : undefined}
           aria-describedby={errors.subject ? "cf-subject-error" : undefined}
           aria-invalid={!!errors.subject}
         >
@@ -297,11 +184,11 @@ export default function ContactForm() {
             </option>
           ))}
         </select>
-        {errors.subject && <p id="cf-subject-error" role="alert" className="cf-error">{errors.subject}</p>}
+        {errors.subject && <p id="cf-subject-error" role="alert" className="font-mono text-[0.72rem] text-error mt-1 tracking-[0.02em]">{errors.subject}</p>}
       </div>
 
-      <div className="cf-field">
-        <label className="cf-label" htmlFor="cf-message">
+      <div className="mb-5">
+        <label className="block font-heading text-[0.8rem] font-medium text-text-secondary mb-1.5 tracking-[0.03em]" htmlFor="cf-message">
           Message
         </label>
         <textarea
@@ -312,25 +199,22 @@ export default function ContactForm() {
           value={form.message}
           onChange={handleChange}
           onBlur={handleBlur}
-          style={{
-            ...fieldStyle("message"),
-            resize: "vertical",
-            minHeight: 120,
-          }}
+          className={`${fieldClasses} resize-y min-h-[120px]`}
+          data-error={errors.message ? "" : undefined}
           aria-describedby={errors.message ? "cf-message-error" : undefined}
           aria-invalid={!!errors.message}
         />
-        {errors.message && <p id="cf-message-error" role="alert" className="cf-error">{errors.message}</p>}
+        {errors.message && <p id="cf-message-error" role="alert" className="font-mono text-[0.72rem] text-error mt-1 tracking-[0.02em]">{errors.message}</p>}
       </div>
 
       <button
         type="submit"
-        className="cf-submit"
+        className="inline-flex items-center justify-center gap-2 w-full px-9 py-3.5 bg-accent-primary text-[#F0E6D3] font-heading font-semibold text-[0.95rem] border-none rounded-[10px] cursor-pointer transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:enabled:-translate-y-0.5 hover:enabled:bg-accent-hover hover:enabled:shadow-[0_0_24px_rgba(45,87,65,0.3),0_8px_24px_rgba(0,0,0,0.3)] disabled:opacity-60 disabled:cursor-not-allowed"
         disabled={status === "submitting"}
       >
         {status === "submitting" ? (
           <>
-            <span className="cf-spinner" />
+            <span className="w-[18px] h-[18px] border-2 border-[rgba(240,230,211,0.3)] border-t-[#F0E6D3] rounded-full animate-[cf-spin_0.6s_linear_infinite]" />
             Sending...
           </>
         ) : (
@@ -354,7 +238,7 @@ export default function ContactForm() {
       </button>
 
       {status === "success" && (
-        <div className="cf-status cf-status--success" aria-live="polite" role="status">
+        <div className="animate-[cf-status-in_0.4s_ease-out] mt-4 px-5 py-4 rounded-[10px] font-sans text-[0.9rem] flex items-center gap-2.5 bg-[rgba(34,197,94,0.08)] border border-[rgba(34,197,94,0.2)] text-success" aria-live="polite" role="status">
           <svg
             width="18"
             height="18"
@@ -372,7 +256,7 @@ export default function ContactForm() {
       )}
 
       {status === "error" && (
-        <div className="cf-status cf-status--error" aria-live="assertive" role="alert">
+        <div className="animate-[cf-status-in_0.4s_ease-out] mt-4 px-5 py-4 rounded-[10px] font-sans text-[0.9rem] flex items-center gap-2.5 bg-[rgba(239,68,68,0.08)] border border-[rgba(239,68,68,0.2)] text-error" aria-live="assertive" role="alert">
           <svg
             width="18"
             height="18"
