@@ -32,3 +32,7 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={new URL(image, Astro.site).href} />
+<meta name="author" content="Fernando" />
+<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#F5F0E8" media="(prefers-color-scheme: light)" />
+<meta name="generator" content={Astro.generator} />

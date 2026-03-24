@@ -5,7 +5,7 @@ import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://heisensden.pages.dev',
+  site: 'https://portfolio-4u5.pages.dev',
   output: 'static',
   integrations: [
     react(),

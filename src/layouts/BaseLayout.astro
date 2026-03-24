@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import SEO from '@components/astro/SEO.astro';
+import SchemaMarkup from '@components/astro/SchemaMarkup.astro';
 import Header from '@components/astro/Header.astro';
 import Footer from '@components/astro/Footer.astro';
 import CustomCursor from '@components/react/CustomCursor';
@@ -11,9 +12,10 @@ interface Props {
   description: string;
   image?: string;
   type?: 'website' | 'article';
+  schemaType?: 'WebSite' | 'ProfilePage' | 'CreativeWork';
 }
 
-const { title, description, image, type } = Astro.props;
+const { title, description, image, type, schemaType = 'WebSite' } = Astro.props;
 ---
 
 <!doctype html>
@@ -23,11 +25,15 @@ const { title, description, image, type } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <SEO title={title} description={description} image={image} type={type} />
+    <SchemaMarkup type={schemaType} title={title} description={description} url={Astro.url.href} image={image} />
     <ClientRouter />
   </head>
   <body class="min-h-screen bg-bg-primary text-text-primary antialiased">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-accent-primary focus:px-4 focus:py-2 focus:text-[#F0E6D3] focus:outline-none">
+      Skip to content
+    </a>
     <Header />
-    <main class="pt-[73px]">
+    <main id="main-content" class="pt-[73px]">
       <slot />
     </main>
     <Footer />

@@ -40,6 +40,7 @@ const currentPath = Astro.url.pathname;
       id="mobile-menu-btn"
       class="md:hidden flex flex-col gap-1.5 p-2"
       aria-label="Toggle menu"
+      aria-expanded="false"
     >
       <span class="block h-0.5 w-6 bg-text-primary transition-transform" id="burger-top"></span>
       <span class="block h-0.5 w-6 bg-text-primary transition-opacity" id="burger-mid"></span>
@@ -78,6 +79,7 @@ const currentPath = Astro.url.pathname;
 
   btn?.addEventListener('click', () => {
     isOpen = !isOpen;
+    btn?.setAttribute('aria-expanded', String(isOpen));
     menu?.classList.toggle('hidden', !isOpen);
 
     if (isOpen) {

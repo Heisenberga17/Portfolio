@@ -1,0 +1,57 @@
+---
+interface Props {
+  type: 'WebSite' | 'ProfilePage' | 'CreativeWork';
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+}
+
+const { type, title, description, url, image } = Astro.props;
+const siteUrl = Astro.site?.href || 'https://portfolio-4u5.pages.dev';
+
+const personSchema = {
+  "@type": "Person",
+  "name": "Fernando",
+  "url": siteUrl,
+  "jobTitle": "Full Stack Developer",
+  "sameAs": [
+    "https://github.com/Heisenberga17",
+    "https://linkedin.com/in/heisenberga17"
+  ]
+};
+
+let schema: Record<string, any>;
+
+if (type === 'WebSite') {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Heisen's Den",
+    "url": siteUrl,
+    "description": description || "Fernando's portfolio — Full Stack Developer",
+    "author": personSchema
+  };
+} else if (type === 'ProfilePage') {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "name": title || "About Fernando",
+    "url": url || `${siteUrl}/about`,
+    "description": description,
+    "mainEntity": personSchema
+  };
+} else {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": title,
+    "url": url,
+    "description": description,
+    "image": image,
+    "author": personSchema
+  };
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

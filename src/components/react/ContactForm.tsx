@@ -247,8 +247,10 @@ export default function ContactForm() {
             onChange={handleChange}
             onBlur={handleBlur}
             style={fieldStyle("name")}
+            aria-describedby={errors.name ? "cf-name-error" : undefined}
+            aria-invalid={!!errors.name}
           />
-          {errors.name && <p className="cf-error">{errors.name}</p>}
+          {errors.name && <p id="cf-name-error" role="alert" className="cf-error">{errors.name}</p>}
         </div>
 
         <div className="cf-field">
@@ -264,8 +266,10 @@ export default function ContactForm() {
             onChange={handleChange}
             onBlur={handleBlur}
             style={fieldStyle("email")}
+            aria-describedby={errors.email ? "cf-email-error" : undefined}
+            aria-invalid={!!errors.email}
           />
-          {errors.email && <p className="cf-error">{errors.email}</p>}
+          {errors.email && <p id="cf-email-error" role="alert" className="cf-error">{errors.email}</p>}
         </div>
       </div>
 
@@ -280,6 +284,8 @@ export default function ContactForm() {
           onChange={handleChange}
           onBlur={handleBlur}
           style={fieldStyle("subject")}
+          aria-describedby={errors.subject ? "cf-subject-error" : undefined}
+          aria-invalid={!!errors.subject}
         >
           {SUBJECT_OPTIONS.map((opt) => (
             <option
@@ -291,7 +297,7 @@ export default function ContactForm() {
             </option>
           ))}
         </select>
-        {errors.subject && <p className="cf-error">{errors.subject}</p>}
+        {errors.subject && <p id="cf-subject-error" role="alert" className="cf-error">{errors.subject}</p>}
       </div>
 
       <div className="cf-field">
@@ -311,8 +317,10 @@ export default function ContactForm() {
             resize: "vertical",
             minHeight: 120,
           }}
+          aria-describedby={errors.message ? "cf-message-error" : undefined}
+          aria-invalid={!!errors.message}
         />
-        {errors.message && <p className="cf-error">{errors.message}</p>}
+        {errors.message && <p id="cf-message-error" role="alert" className="cf-error">{errors.message}</p>}
       </div>
 
       <button
@@ -346,7 +354,7 @@ export default function ContactForm() {
       </button>
 
       {status === "success" && (
-        <div className="cf-status cf-status--success">
+        <div className="cf-status cf-status--success" aria-live="polite" role="status">
           <svg
             width="18"
             height="18"
@@ -364,7 +372,7 @@ export default function ContactForm() {
       )}
 
       {status === "error" && (
-        <div className="cf-status cf-status--error">
+        <div className="cf-status cf-status--error" aria-live="assertive" role="alert">
           <svg
             width="18"
             height="18"
