@@ -140,13 +140,13 @@ npx shadcn@latest add @react-bits/[Name]-TS-TW
 
 ## Color Palette
 
-| Swatch | Hex | Token | Usage |
-|--------|-----|-------|-------|
-| ![#2D5741](https://via.placeholder.com/12/2D5741/2D5741.png) | `#2D5741` | `accent-primary` | Forest green — buttons, links, active states |
-| ![#D4A843](https://via.placeholder.com/12/D4A843/D4A843.png) | `#D4A843` | `accent-secondary` | Gold/amber — highlights, badges |
-| ![#3A7055](https://via.placeholder.com/12/3A7055/3A7055.png) | `#3A7055` | `accent-hover` | Hover states |
-| ![#0a0a0a](https://via.placeholder.com/12/0a0a0a/0a0a0a.png) | `#0a0a0a` | `bg-dark` | Dark mode background |
-| ![#F5F0E8](https://via.placeholder.com/12/F5F0E8/F5F0E8.png) | `#F5F0E8` | `bg-light` | Light mode background |
+| Hex | Token | Usage |
+|-----|-------|-------|
+| `#2D5741` | `accent-primary` | Forest green — buttons, links, active states |
+| `#D4A843` | `accent-secondary` | Gold/amber — highlights, badges |
+| `#3A7055` | `accent-hover` | Hover states |
+| `#0a0a0a` | `bg-dark` | Dark mode background |
+| `#F5F0E8` | `bg-light` | Light mode background |
 
 ## Scripts
 
