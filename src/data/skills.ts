@@ -2,45 +2,46 @@ export interface Skill {
   name: string;
   category: "frontend" | "backend" | "tools" | "platforms";
   daily?: boolean;
+  url: string;
 }
 
 export const skills: Skill[] = [
   // Frontend
-  { name: "React", category: "frontend", daily: true },
-  { name: "Astro", category: "frontend", daily: true },
-  { name: "TypeScript", category: "frontend", daily: true },
-  { name: "JavaScript", category: "frontend" },
-  { name: "Tailwind CSS", category: "frontend", daily: true },
-  { name: "Three.js", category: "frontend" },
-  { name: "GSAP", category: "frontend" },
-  { name: "Anime.js", category: "frontend" },
-  { name: "Motion", category: "frontend" },
-  { name: "MDX", category: "frontend" },
-  { name: "HTML/CSS", category: "frontend" },
+  { name: "React", category: "frontend", daily: true, url: "https://react.dev" },
+  { name: "Astro", category: "frontend", daily: true, url: "https://astro.build" },
+  { name: "TypeScript", category: "frontend", daily: true, url: "https://www.typescriptlang.org" },
+  { name: "JavaScript", category: "frontend", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+  { name: "Tailwind CSS", category: "frontend", daily: true, url: "https://tailwindcss.com" },
+  { name: "Three.js", category: "frontend", url: "https://threejs.org" },
+  { name: "GSAP", category: "frontend", url: "https://gsap.com" },
+  { name: "Anime.js", category: "frontend", url: "https://animejs.com" },
+  { name: "Motion", category: "frontend", url: "https://motion.dev" },
+  { name: "MDX", category: "frontend", url: "https://mdxjs.com" },
+  { name: "HTML/CSS", category: "frontend", url: "https://developer.mozilla.org/en-US/docs/Web" },
   // Backend
-  { name: "Cloudflare Workers", category: "backend", daily: true },
-  { name: "Node.js", category: "backend", daily: true },
-  { name: "Python", category: "backend" },
-  { name: "C/C++", category: "backend" },
-  { name: "Assembly", category: "backend" },
-  { name: "OpenGL/GLSL", category: "backend" },
-  { name: "REST APIs", category: "backend", daily: true },
+  { name: "Cloudflare Workers", category: "backend", daily: true, url: "https://developers.cloudflare.com/workers" },
+  { name: "Node.js", category: "backend", daily: true, url: "https://nodejs.org" },
+  { name: "Python", category: "backend", url: "https://docs.python.org/3" },
+  { name: "C/C++", category: "backend", url: "https://en.cppreference.com" },
+  { name: "Assembly", category: "backend", url: "https://rgbds.gbdev.io" },
+  { name: "OpenGL/GLSL", category: "backend", url: "https://learnopengl.com" },
+  { name: "REST APIs", category: "backend", daily: true, url: "https://developer.mozilla.org/en-US/docs/Glossary/REST" },
   // Tools
-  { name: "Git", category: "tools", daily: true },
-  { name: "GitHub Actions", category: "tools", daily: true },
-  { name: "Claude Code", category: "tools", daily: true },
-  { name: "Vite", category: "tools", daily: true },
-  { name: "VS Code", category: "tools", daily: true },
-  { name: "Vitest", category: "tools" },
-  { name: "Wrangler", category: "tools", daily: true },
-  { name: "CMake", category: "tools" },
-  { name: "pnpm", category: "tools", daily: true },
-  { name: "Figma", category: "tools" },
+  { name: "Git", category: "tools", daily: true, url: "https://git-scm.com" },
+  { name: "GitHub Actions", category: "tools", daily: true, url: "https://docs.github.com/en/actions" },
+  { name: "Claude Code", category: "tools", daily: true, url: "https://docs.anthropic.com/en/docs/claude-code" },
+  { name: "Vite", category: "tools", daily: true, url: "https://vite.dev" },
+  { name: "VS Code", category: "tools", daily: true, url: "https://code.visualstudio.com" },
+  { name: "Vitest", category: "tools", url: "https://vitest.dev" },
+  { name: "Wrangler", category: "tools", daily: true, url: "https://developers.cloudflare.com/workers/wrangler" },
+  { name: "CMake", category: "tools", url: "https://cmake.org" },
+  { name: "pnpm", category: "tools", daily: true, url: "https://pnpm.io" },
+  { name: "Figma", category: "tools", url: "https://www.figma.com" },
   // Platforms
-  { name: "Cloudflare", category: "platforms", daily: true },
-  { name: "GitHub", category: "platforms", daily: true },
-  { name: "Spotify for Artists", category: "platforms" },
-  { name: "YouTube Studio", category: "platforms" },
+  { name: "Cloudflare", category: "platforms", daily: true, url: "https://www.cloudflare.com" },
+  { name: "GitHub", category: "platforms", daily: true, url: "https://github.com" },
+  { name: "Spotify for Artists", category: "platforms", url: "https://artists.spotify.com" },
+  { name: "YouTube Studio", category: "platforms", url: "https://studio.youtube.com" },
 ];
 
 export const skillCategories = ["frontend", "backend", "tools", "platforms"] as const;
