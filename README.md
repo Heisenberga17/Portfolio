@@ -171,6 +171,7 @@ cd worker && npx wrangler deploy
 
 ## Contact
 
+- **WhatsApp**: [+507 6379-7497](https://wa.me/50763797497)
 - **GitHub**: [Heisenberga17](https://github.com/Heisenberga17)
 - **LinkedIn**: [Fernando Quijano](https://www.linkedin.com/in/fernando-quijano-0880911b1/)
 - **Instagram**: [@heisen_ops](https://www.instagram.com/heisen_ops/)
