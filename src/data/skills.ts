@@ -46,8 +46,4 @@ export const skills: Skill[] = [
 
 export const skillCategories = ["frontend", "backend", "tools", "platforms"] as const;
 
-export const techStripItems = [
-  "React", "Astro", "TypeScript", "Three.js", "GSAP",
-  "Cloudflare Workers", "Node.js", "Python", "C/C++",
-  "Assembly", "OpenGL", "Vite", "Claude Code",
-];
+export const techStripItems = skills.map((s) => s.name);
